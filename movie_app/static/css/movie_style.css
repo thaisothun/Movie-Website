@@ -2,7 +2,7 @@
 .wrapper-movie{
     position: relative;
     width: 100vw;
-    min-height: 83.5vh;
+    height: 83.5vh;
     opacity: 1;
 }
 
@@ -247,6 +247,6 @@
     }
 
     .wrapper-movie{
-        height: 85vh;
+        height: auto;
     }
 }
