@@ -202,6 +202,7 @@ input[type="checkbox"] {
     background-color: #e0e2db;
     top:0rem;
     height: 91.5vh;
+    width: 100vw;
     opacity: 0;
     transition: 1s ease;
 }
