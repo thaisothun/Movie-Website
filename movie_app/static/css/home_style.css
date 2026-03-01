@@ -505,11 +505,16 @@ footer{
     cursor: pointer;
 }
 
+@media screen and (max-width: 575px) {
+    .container-navbar .logo {
+        visibility: hidden;
+    }
+}
+
 @media screen and (max-width: 840px) {
 
     .wrapper-link, .wrapper-login-search{
         display: none;
-
     }
     .sidebar-top{
         display: flex;
