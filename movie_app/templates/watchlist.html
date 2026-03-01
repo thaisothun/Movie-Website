@@ -1,0 +1,47 @@
+{% extends 'nav_bar.html' %}
+{% load static %}
+
+{% block title %}
+<title>Watchlist</title>
+{% endblock %}
+
+{% block content %}
+<div class="popular-movies" style="min-height: 83.5vh ;">
+    <h2>{{user}}'s watchlist >></h2>
+    <div class="wrapper-movie-card">
+        {% for movie in movies %}
+        <a href="{% url 'movie' title=movie.movie.title pk=movie.movie.id %}"><div class="movie-card">
+            <div class="poster">
+                <img src="{{movie.movie.poster.url}}">
+                <p class="qulity">{{movie.movie.qulity}}</p>
+            </div>
+            <div class="card-content">
+                <p>{{movie.movie.title}}</p>
+                <hr>
+                {% for genre in movie.movie.genres.all %}
+                <small>{{genre.genre_choice}}</small>
+                {% endfor %}
+            </div>
+        </div></a>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    const sections = document.querySelectorAll('.movie-card')
+    const observer = new IntersectionObserver((entries)=>{
+        entries.forEach((entry,i)=>{
+            if(entry.isIntersecting){
+            entry.target.classList.add('show')
+            console.log(entry)
+            }
+        }) 
+        
+    },{
+        threshold : 1
+    })
+
+    sections.forEach((section)=>{
+        observer.observe(section)
+    }) 
+</script>
+{% endblock %}

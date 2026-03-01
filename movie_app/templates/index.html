@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+</head>
+<body>
+    <P> </P>This is the index page </P>
+    {{hls.hls_playlist}}
+    <video id="my-video" class="video-js vjs-theme-city" controls preload="auto" width="640" height="360">
+    <source src="{{hls}}" type="application/x-mpegURL">
+    
+    </video>
+
+
+</body>
+</html>

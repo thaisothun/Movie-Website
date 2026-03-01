@@ -1,0 +1,79 @@
+{% extends 'nav_bar.html' %}
+{% load static %}
+
+{% block title %}
+<title>Profile</title>
+<link rel="stylesheet" href="{% static 'css/profile_style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}    
+        <div style= "width:150px; height:150px; border-radius: 50%;">
+        {% if user_profile.image_profile %}
+        <img src="{{user_profile.image_profile.url}}" style= "width:100%; height:100%; object-fit: cover">
+        {% else %}
+        <img src="{% static 'img/no_profile.png' %}" style= "width:100%; height:100%; object-fit: cover">
+        {% endif %}
+        </div>
+        {{form2.image_profile}}
+        
+        <p >{{profile.short_message}}</p>
+        <br>
+        
+        <h2 > Username : <span style="text-transform: uppercase;"> {{user}} </span></h2>
+
+        <div class="info">
+            <div class="cloum1">
+                <p>Username</p>
+                <p style="text-transform: capitalize;">First Name</p>
+                <p style="text-transform: capitalize;">Last Name</p>
+                <p>Gender</p>
+                <p>Date of Brith</p>
+                <p>Email Adress</p>
+                <p>Phone Number</p>
+                <p>Short Message</p>
+                <p>Address</p>
+            </div>
+            <div class="cloum2">
+                {{ form1.username}}
+                {{ form1.first_name}}
+                {{ form1.last_name}}
+                {{ form2.gender}}
+                {{ form2.date_of_brith}}
+                {{ form1.email}}
+                {{ form2.phone_number}}
+                {{ form2.short_message}}
+                {{ form2.address}}
+                <div class="container-button">
+                <div class="block"><button type="submit">Update Profile</button></div>
+                <div class="block"><a href="{% url 'change-password' %}">Change Password</a></div>
+                <div class="block"> <a href="{% url 'watchlist' %}">Your Watchlist</a> </div>
+                </div>
+                {% if form1.errors %}
+                    <div class="error">
+                    
+                    {% for field, errors in form1.errors.items %}
+                    {% for error in errors %}
+                        <li style="list-style-type: none">{{ error|escape }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                    
+                    </div>
+                    {% endif %}
+                    {% if messages %}
+                    <div class="message-container">
+                        {% for message in messages %}
+                        <!-- Use message.tags as a CSS class for styling (e.g., alert-success, alert-danger) -->
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+            </div>
+        </div>
+    </form>
+</div> 
+{% endblock %}

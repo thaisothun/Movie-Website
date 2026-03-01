@@ -1,0 +1,285 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
+    {% endblock %}
+    {% block title %}
+    <title>Navigation Bar</title>
+    {% endblock %}
+</head>
+<body>
+    <div class="container-navbar">
+        <div class="logo">
+            <h2>Movie KT</h2><img src="{% static 'img/icons8-cinema-96.png' %}" alt="My logo"> 
+        </div>
+        <div class="wrapper-link">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'movies' %}">Movies</a></li>
+                <li><a href="{% url 'tv_shows' %}">TV Shows</a></li>
+                <li><a id="browse" href="javascript:void(0)">Browse</a></li>
+            </ul>
+
+        </div>
+        <div class="wrapper-login-search">
+            <form action="{% url 'search' %}" method="GET" req>
+            <input name="search" id="input-search" type="text" placeholder="Search Movies or TV Shows" required value="{{ request.GET.search }}">
+            <button type="submit" id="search">Search</button></form>
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" id="login">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}" id="login">Login</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+                
+                <div id="contain-profile">    
+                {% if user_profile.image_profile %}
+                <a href="{% url 'profile' %}"><img id="profile" src="{{user_profile.image_profile.url}}"></a>
+                {% else %}
+                <a href="{% url 'profile' %}"><img id="profile" src="{% static 'img/no_profile.png' %}"></a>
+                {% endif %}
+                </div>
+            
+            {% else %}
+            
+            {% endif %}
+        </div>
+    </div>
+    <form action="{% url 'browse_fliter' %}" method="POST">
+    {% csrf_token %}
+    <div class="browse-area">
+    <div class="container-browse">
+        <div class="movie-type">
+            <p>Type: </p>
+            <input type="radio" id="all" name="movie-type" value="All" checked>
+            <label for="all">All  </label>
+            {% for type in types %}
+            <input type="radio" id="{{type.type}}" name="movie-type" value="{{type.type}}">
+            <label for="{{type.type}}">{{type.type}}</label>
+            {% endfor %}
+        </div>
+        <div class="quality">
+            <p>Quality: </p>
+            <input type="radio" id="all1" name="quality" value="All" checked>
+            <label for="all1">All</label>
+            <input type="radio" id="HD" name="quality" value="HD">
+            <label for="HD">HD</label>
+            <input type="radio" id="CAM" name="quality" value="CAM">
+            <label for="CAM">CAM</label>
+        </div>
+        <div class="released">
+            <p>Released: </p>
+            <input type="radio" id="all2" name="year" value="All" checked>
+            <label for="all">All</label>
+            {% for year in year_list %}
+            <input type="radio" id="{{year.year}}" name="year" value="{{year.year}}">
+            <label for="{{year.year}}">{{year.year}}</label>
+            {% endfor %}
+        </div>
+        <div class="genre">
+            <p>Genre: </p>
+            {% for genre in genres %}
+            <input type="checkbox" id="{{genre}}" name="genre" value="{{genre}}">
+            <label for={{genre}}>{{genre}}</label>
+            {% endfor %}
+        </div>
+        <div class="country">
+            <p>Country: </p>
+            {% for country in countries %}
+            <input type="checkbox" id="{{country}}" name="country" value="{{country}}">
+            <label for={{country}}>{{country}}</label>
+            {% endfor %}
+        </div>
+        <button type="submit">Browse</button> 
+    </div>
+    </div>
+    </form>
+    <div class="container-sidebar">
+        <form action="{% url 'search' %}" method="GET" req>
+            {% csrf_token %}
+            <div class="sidebar-top">
+                <div style="display: flex; gap:0.5rem">
+                <input name="search" type="text" placeholder="Search Movies or TV Shows" required value="{{ request.GET.search }}"> 
+                <button id="search" type="submit"><img src="{% static 'img/search.png' %}"></button></form>
+                </div>
+            <img id="menu" src="{% static 'img/menu.png' %}">
+            </div>
+        
+        <div class="sidebar">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'movies' %}">Movies</a></li>
+            <li><a href="{% url 'tv_shows' %}">TV Shows</a></li>
+            <li><a id="browse1" href="javascript:void(0)">Browse</a></li>
+            <li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}" id="login">Profile</a></li>
+                {% else %}
+                
+                {% endif %}
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" id="login">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}" id="login">Login</a>
+                {% endif %}</li>
+            
+                
+        </ul>
+        </div>
+    </div>    
+    {% block content %}
+    
+    {% endblock %}
+</body>
+<script>
+    let status = 0
+    var browse_btn = document.getElementById('browse')
+    var browse1_btn = document.getElementById('browse1')
+    var browse_areas = document.querySelectorAll('.browse-area')
+    var active1 = document.getElementsByClassName('active1');
+
+    browse_areas.forEach((area)=>{
+        area.addEventListener('mouseleave', ()=>{
+            if(status==1){
+            [...active1].forEach ((area)=>{
+                area.classList.remove('active1')
+            })
+            status=0
+        }
+        })
+    })
+
+    browse_btn.addEventListener('click', ()=>{
+        window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+                });
+        if(status == 0){
+            browse_areas.forEach(browse_area => {
+            browse_area.classList.add('active1');
+            });
+            status=1
+            return
+        }
+        if(status==1){
+            [...active1].forEach ((area)=>{
+                area.classList.remove('active1')
+            })
+            status=0
+        }
+    })
+
+    var search_hover = document.getElementById('search')
+    var search_input = document.getElementById('input-search')
+    var search_areas = document.querySelectorAll('.wrapper-login-search')
+    search =0
+    search_hover.addEventListener('mouseenter', ()=>{
+        if(search==0){
+            search_input.classList.add('show')
+            search=1
+        }
+    })
+
+    search_areas.forEach((search_area)=>{
+        search_area.addEventListener('mouseleave', ()=>{
+            if (document.activeElement === search_input) {
+                return
+            } else{
+                if(search==1){
+                    search_input.classList.remove('show')
+                    search=0
+                    }
+            }
+            })
+    })
+
+    document.addEventListener('click', ()=>{
+        if (document.activeElement === search_input) {    
+            return
+        }else{
+        if(search==1){
+            search_input.classList.remove('show')
+            search=0
+            }
+        }
+    })
+
+    function set_input(input, savedRadioValue ){
+    document.querySelectorAll(`input[name=${input}]`).forEach(radio => {
+    radio.addEventListener('change', (e) => {
+    localStorage.setItem(`${savedRadioValue}`, e.target.value);
+    });
+    });
+
+    window.addEventListener('load', () => {
+    const savedValue = localStorage.getItem(`${savedRadioValue}`);
+    if (savedValue) {
+        const radioToCheck = document.querySelector(`input[name=${input}][value="${savedValue}"]`);
+        if (radioToCheck) radioToCheck.checked = true;
+        }
+        });
+    }
+
+    set_input('movie-type', 'savedRadioValue1')
+    set_input('quality', 'savedRadioValue2')
+    set_input('year', 'savedRadioValue3')
+    
+    let menu_status = 0;
+    var menu = document.getElementById('menu')
+    var menu_area = document.getElementsByClassName('sidebar')
+    window.addEventListener('resize', ()=>{
+        let viewportWidth = window.innerWidth;
+        if(viewportWidth>790){
+            menu_area[0].classList.remove('show')
+            menu_status = 0;
+        }
+    })
+    
+    menu.addEventListener('click', ()=>{
+        if(menu_status==0){
+            menu_area[0].classList.add('show')
+            menu_status = 1;
+            return
+        }
+        if(menu_status==1){
+            menu_area[0].classList.remove('show')
+            menu_status = 0;    
+        }
+    })
+
+    browse1_btn.addEventListener('click', ()=>{
+        window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+                });
+        if(status == 0){
+            browse_areas.forEach(browse_area => {
+            browse_area.classList.add('active1');
+            menu_area[0].classList.remove('show')
+            });
+            menu_status = 1;
+            status=1
+            return
+        }
+        if(status==1){
+            [...active1].forEach ((area)=>{
+                area.classList.remove('active1')
+            })
+            status=0
+        }
+    })
+
+</script>
+<footer>
+    <br>
+    <p>All Rights Reserved <code>@</code> 2026</p>
+    <br>
+</footer>
+</html>

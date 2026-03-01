@@ -1,0 +1,18 @@
+
+.playing{
+    position: relative;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    flex-direction: column;
+    min-height: 83.5vh;
+}
+
+@media screen and (max-width: 840px) {
+    .playing{
+        min-height: 85vh;
+
+    }
+
+    
+}

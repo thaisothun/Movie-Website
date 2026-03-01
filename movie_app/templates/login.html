@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+    <title>Login</title>
+</head>
+<body>
+    <img style="position: absolute; height: 100vh; width: 100%; object-fit: cover; z-index: -999;" src="{% static 'img/login_bg.jpg' %}">
+    <span class="loader"></span>
+    <div class="wrapper">
+    <div class="container-login">
+        <form Method="POST">
+            {% csrf_token %}
+            <h3 class="animation">Login</h3>    
+            <div class="animation">
+            {{form_login.username}}
+            {{form_login.password}}
+            </div>
+            <div class="animation">
+            <button action="submit"> Login </button>
+            </div>
+            <br>
+            <p> {{error_login}}</p>
+        </form>
+    </div>
+    <div class="container-registration">
+        <form method="POST">
+            {% csrf_token %}
+        <div class="layer1">
+            <div class="animation1">
+            <a href="javascript:void(0)" id="back">X</a>
+            </div>
+            <div class="animation1">
+            <h3>Registration</h3>
+            </div>
+            <div class="animation1">
+            {{form_register.username}}
+            {{form_register.first_name}}
+            {{form_register.last_name}}
+            {{form_register.email}}
+            {{form_register.password1}}
+            {{form_register.password2}}
+            </div>
+            <div class="animation1">
+            <button action="submit">Register</button>
+            </div>  
+        </div>
+        </form>
+        <div class="layer2">
+            <h3 class="animation"> Welcome Back </h3>
+            <br>
+            <p class="animation">Movies KT is Free Movies streaming site with zero ads. We let you watch movies online without having to register or paying, with over 10000 movies and TV-Series. You can also Download full movies from HDToday and watch it later if you want.</p>
+            <br>
+            <a id="register" class="animation" href="javascript:void(0)">Register</a>
+            {% if form_register.errors %}
+            <div id="error" class="animation">
+            {% for field, errors in form_register.errors.items %}
+            {% for error in errors %}
+                <li>{{ error|escape }}</li>
+            {% endfor %}
+            {% endfor %}
+            </div>
+            {% endif %}
+        </div>    
+    </div>
+    </div>
+      
+</body>
+<script>
+    var btn = document.getElementById('register')
+    var btn_back = document.getElementById('back')
+    var layer1 = document.getElementsByClassName('layer1')
+    var layer2 = document.getElementsByClassName('layer2')
+    var forms_register = document.querySelectorAll('.animation1')
+    btn.addEventListener('click', ()=>{
+        layer1[0].classList.add('show')
+        layer2[0].classList.add('hide')
+        forms_register.forEach((form,i)=>{
+            form.classList.add('active')
+        })
+    })
+
+    btn_back.addEventListener('click',()=>{
+        layer1[0].classList.remove('show')
+        layer2[0].classList.remove('hide')
+        forms_register.forEach((form,i)=>{
+            form.classList.remove('active')
+        })
+    })
+    
+</script>
+</html>
