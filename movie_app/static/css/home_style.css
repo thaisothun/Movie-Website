@@ -314,6 +314,7 @@ input[type="checkbox"] {
     column-gap: 20px;
     row-gap: 20px;
     padding: 1rem 20%;
+    margin-top: 1rem;
     background-color: var(--accent-color);
         
 }
