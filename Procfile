@@ -1,1 +1,1 @@
-web: gunicorn MOVIE.wsgi
+web: gunicorn movie.wsgi
