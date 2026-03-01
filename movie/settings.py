@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['moviekt.up.railway.app']
-CSRF_TRUSTED_ORIGINS = ['moviekt.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://moviekt.up.railway.app']
 
 
 # Application definition
