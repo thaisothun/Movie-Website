@@ -9,8 +9,8 @@
     font-family: "Open Sans", sans-serif;
     font-optical-sizing: auto;
     box-sizing: border-box;
-    --base-color: #191716;
-    --accent-color: #e6af2e;
+    --base-color: #191716 !important;
+    --accent-color: #e6af2e !important;
     --text-color1: #e0e2db;
     --text-color2: rgb(255, 255, 255);    
     font-family: "Open Sans", sans-serif;
