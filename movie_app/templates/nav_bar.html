@@ -106,7 +106,7 @@
             {% csrf_token %}
             <div class="sidebar-top">
                 <div style="display: flex; gap:0.5rem">
-                <input name="search" type="text" placeholder="Search Movies or TV Shows" required value="{{ request.GET.search }}"> 
+                <input style="padding-left: 10px;" name="search" type="text" placeholder="Search Movies or TV Shows" required value="{{ request.GET.search }}"> 
                 <button id="search" type="submit"><img src="{% static 'img/search.png' %}"></button></form>
                 </div>
             <img id="menu" src="{% static 'img/menu.png' %}">

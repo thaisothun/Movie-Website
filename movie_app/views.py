@@ -497,6 +497,7 @@ def add_watchlist(request, pk, title):
         return redirect(reverse('movie',  kwargs={'pk':pk, 'title': title}))
     
 def profile(request):
+    types, year_list, genres, countries = browse()
     user = request.user.userprofile
     current_user = get_object_or_404(User,username=user)
     user_profile = current_user.userprofile
@@ -512,11 +513,16 @@ def profile(request):
         'form1' : form1,
         'form2' : form2,
         'user_profile' : user_profile,
+        'types':types,
+        'year_list':year_list,
+        'genres':genres,
+        'countries':countries,
     }
 
     return render(request, 'profile.html', context)
 
 def change_password(request):
+    types, year_list, genres, countries = browse()
     form = CustomPasswordChangeForm(user=request.user)
     user_profile = get_profile(request)
     if request.method == "POST":
@@ -529,10 +535,13 @@ def change_password(request):
                 messages.info(request,'Your password has been changed scucessfully')
                 return redirect('login')
     
-    
     context={
         'form' : form,
         'user_profile' : user_profile,
+        'types':types,
+        'year_list':year_list,
+        'genres':genres,
+        'countries':countries,
     }
 
     return render(request, 'change_password.html', context)
