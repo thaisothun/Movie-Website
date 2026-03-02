@@ -1,0 +1,303 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    box-sizing: border-box;
+    --base-color: #191716;
+    --accent-color: #e6af2e;
+    --text-color1: #e0e2db;
+    --text-color2: rgb(255, 255, 255);    
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+}
+
+body{
+    min-height: 100vh;
+    background-color: var(--base-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@keyframes animation1{
+    0%{
+        opacity: 0;
+        transform: translatex(30px);
+    }
+    100%{
+        opacity: 1;
+        transform: translatex(0);
+    } 
+}
+
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    animation-name: animation1;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+    animation-delay: 2s;
+    opacity: 0;
+}
+
+.container-login{
+    width: 300px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+}
+
+.container-login h3{
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 30%;
+}
+
+.form-control{
+    display: block;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    width: 100%;
+    font-size: 1rem;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(206, 206, 206);    
+}
+
+.container-login p{
+    margin: 1rem;
+    font-size: 0.75rem;
+    color: var(--accent-color);
+}
+
+.container-login button{
+    all:unset;
+    margin-top: 1rem;
+    font-size: 1rem;
+    background-color: var(--accent-color);
+    border-radius: 3px;
+    height: 40px;
+    width: 100%;
+    text-align: center;
+    color: var(--text-color2);
+    cursor: pointer;
+}
+
+.container-registration{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 400px;
+    background: #E6AF2E;
+    background: linear-gradient(67deg, rgba(230, 175, 46, 1) 0%, rgba(234, 168, 79, 1) 5%, rgba(237, 134, 83, 1) 100%);
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    transition: 0.3s;
+}
+
+.container-registration .layer1{
+    display: flex;
+    padding-top: 1rem;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    height: 400px;
+    background: #E6AF2E;
+    background: linear-gradient(67deg, rgba(230, 175, 46, 1) 0%, rgba(234, 168, 79, 1) 5%, rgba(237, 134, 83, 1) 100%);
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: 0.3s ease;
+}
+
+#back{
+    text-decoration: none;
+    position: absolute;
+    top:10px;
+    left:10px;
+    color: var(--base-color);
+}
+
+.form-control-register{
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    height: 30px;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(206, 206, 206);    
+}
+
+.container-registration .layer1 .animation1{
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.container-registration .layer1 .animation1.active{
+    visibility: visible;
+    opacity: 1;
+}
+
+.container-registration .layer1 button{
+    all:unset;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    background-color: var(--base-color);
+    border-radius: 3px;
+    height: 30px;
+    width: 300px;
+    text-align: center;
+    color: var(--text-color2);
+    cursor: pointer;
+}
+
+.container-registration .layer1.show{
+    width: 600px;
+}
+
+
+.container-registration .layer2{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 400px;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    transition: 0.3s;
+    transition-delay: 0.3s;
+    opacity: 1;
+}
+
+.container-registration .layer2.hide{
+    transform: translateY(-20px);
+    opacity: 0;
+    display: none;
+}
+
+
+.container-registration p{
+    color: var(--text-color2);
+}
+
+.container-registration #register{
+    text-decoration: none;
+    color: var(--text-color2);
+    border-radius: 2rem;
+    width: 80%;
+    padding: 0.5rem;
+    text-align: center;
+    background: #c28f19;
+    background: linear-gradient(229deg, rgba(194, 143, 25, 1) 0%, rgba(217, 126, 15, 0.81) 19%, rgba(237, 139, 90, 1) 68%, rgba(219, 107, 55, 1) 100%);
+
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animation{
+    opacity: 0;
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-delay: 2.40s;
+    animation-timing-function: ease-in-out;
+}
+
+.animation:nth-child(1){
+    animation-delay: 2.45s;
+}
+
+.animation:nth-child(2){
+    animation-delay: 2.5s;
+}
+.animation:nth-child(3){
+    animation-delay: 2.55s;
+}
+
+.animation:nth-child(4){
+    animation-delay: 2.60s;
+}
+.animation:nth-child(5){
+    animation-delay: 2.65s;
+}
+
+.animation:nth-child(6){
+    animation-delay: 2.7s;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        position: absolute;
+        animation: rotate 1s linear infinite
+      }
+      .loader::before , .loader::after {
+        content: "";
+        box-sizing: border-box;
+        position: absolute;
+        inset: 0px;
+        border-radius: 50%;
+        border: 5px solid var(--accent-color);
+        animation: prixClipFix 2s linear infinite ;
+      }
+      .loader::after{
+        border-color:var(--base-color);
+        animation: prixClipFix 2s linear infinite , rotate 0.5s linear infinite reverse;
+        inset: 6px;
+      }
+
+      @keyframes rotate {
+        0%   {transform: rotate(0deg)}
+        100%   {transform: rotate(360deg)}
+      }
+
+      @keyframes prixClipFix {
+          0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+          25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+          50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+          75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
+          100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+      }
+
+.container-registration .layer2 #error{
+    margin-top: 1rem;
+    color: rgb(87, 17, 17);
+    font-size: 0.75rem;
+}
+
+@media screen and (max-width: 720px) {
+    .wrapper{
+        scale: 0.8;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .wrapper{
+        scale: 0.6;
+    }
+}
+
