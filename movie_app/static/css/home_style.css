@@ -1,6 +1,7 @@
 :root {
   /* Enables intrinsic size animations for the entire page */
   interpolate-size: allow-keywords; 
+  color-scheme: light;
 }
 
 *{
