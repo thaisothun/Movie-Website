@@ -47,9 +47,9 @@
                 {{ form2.short_message}}
                 {{ form2.address}}
                 <div class="container-button">
-                <div class="block"><button type="submit">Update Profile</button></div>
-                <div class="block"><a href="{% url 'change-password' %}">Change Password</a></div>
-                <div class="block"> <a href="{% url 'watchlist' %}">Your Watchlist</a> </div>
+                <div class="block"><button type="submit"><img src="{% static 'img/update_profile.png' %} "></button></div>
+                <div class="block"><a href="{% url 'change-password' %}"><img src="{% static 'img/change_password.png' %} "></a></div>
+                <div class="block"> <a href="{% url 'watchlist' %}"><img src="{% static 'img/watchlist.png' %} "></a> </div>
                 </div>
                 {% if form1.errors %}
                     <div class="error">
