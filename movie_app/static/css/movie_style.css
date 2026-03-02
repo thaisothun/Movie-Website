@@ -248,5 +248,6 @@
 
     .wrapper-movie{
         min-height: 85vh;
+        height: auto;
     }
 }
