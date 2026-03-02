@@ -448,7 +448,8 @@ footer{
     opacity: 0;
     transform: translateY(20px);
     transition: 0.5s ease;
-    z-index: -9999;
+    visibility: hidden;
+    z-index: 999;
 }
 
 .container-sidebar .sidebar.show{
@@ -456,6 +457,8 @@ footer{
     transform: translateY(5px);
     opacity: 1;
     border: 1px solid var(--base-color);
+    visibility:visible;
+
 }
 
 

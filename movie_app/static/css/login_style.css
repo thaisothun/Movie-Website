@@ -289,8 +289,15 @@ body{
     font-size: 0.75rem;
 }
 
-@media screen and (max-width: 840px) {
+@media screen and (max-width: 720px) {
+    .wrapper{
+        scale: 0.8;
+    }
+}
+
+@media screen and (max-width: 560px) {
     .wrapper{
         scale: 0.6;
     }
 }
+
