@@ -52,7 +52,6 @@ def get_popular_movie():
     movie_fliter = []
     for data in popular_movie_data['results']:
         movie_fliter.append(data['id']) 
-        
     popular_movie = Movie.objects.filter(tmdb_id__in = movie_fliter)
 
     return popular_movie
@@ -65,7 +64,6 @@ def get_trending_movie():
     for data in trending_movie_data['results']:
         movie_fliter.append(data['id']) 
         
-    print(movie_fliter)
     trending_movie = Movie.objects.filter(tmdb_id__in = movie_fliter)
 
     return trending_movie
