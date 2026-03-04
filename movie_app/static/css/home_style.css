@@ -275,8 +275,7 @@ input[type="checkbox"] {
 .wrapper-slice .content .poster{
     width: 10vw;
     height: 15wh;
-    min-width: 70px;
-    min-height: 80px;
+    
     overflow: hidden;
     margin: 2em;  
 }
@@ -574,9 +573,9 @@ footer{
 }
 
 
-@media screen and (max-height: 840px) {
+@media screen and (max-height: 720px) {
     .wrapper-slice .content .poster{
-        width: 50px;
+        width: 70px;
         height: 100px;
     }
 
