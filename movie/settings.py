@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'movie_app',
     'django_cleanup.apps.CleanupConfig',
-    'django_bunny_storage',
 ]
 
 MIDDLEWARE = [
