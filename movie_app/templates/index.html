@@ -3,16 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies</title>
+    <meta name="description" content="4allmovie is Free Movies streaming site with zero ads with fast delivery. We let you watch movies online without having to register or paying, with over 10000 movies and TV-Series.">
+    <title>4allmovie</title>
 </head>
 <body>
-    <P> </P>This is the index page </P>
-    {{hls.hls_playlist}}
-    <video id="my-video" class="video-js vjs-theme-city" controls preload="auto" width="640" height="360">
-    <source src="{{hls}}" type="application/x-mpegURL">
-    
-    </video>
+    <body>
+    <div class="container-navbar">
+        <div class="logo">
+            <h2><span style="color: rgba(230, 175, 46); font-size: 2.25rem;">4</span>allmovie</h2><img src="{% static 'img/icons8-cinema-96.png' %}" alt="My logo"> 
+        </div>
+        <div class="wrapper-link">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'movies' %}">Movies</a></li>
+                <li><a href="{% url 'tv_shows' %}">TV Shows</a></li>
+                <li><a id="browse" href="javascript:void(0)">Browse</a></li>
+            </ul>
 
+        </div>
+        <div class="wrapper-login-search">
+            <form action="{% url 'search' %}" method="GET" req>
+            <input name="search" id="input-search" type="text" placeholder="Search Movies or TV Shows" required value="{{ request.GET.search }}">
+            <button type="submit" id="search">Search</button></form>
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" id="login">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}" id="login">Login</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+                
+                <div id="contain-profile">    
+                {% if user_profile.image_profile %}
+                <a href="{% url 'profile' %}"><img id="profile" src="{{user_profile.image_profile.url}}"></a>
+                {% else %}
+                <a href="{% url 'profile' %}"><img id="profile" src="{% static 'img/no_profile.png' %}"></a>
+                {% endif %}
+                </div>
+            
+            {% else %}
+            
+            {% endif %}
+        </div>
+    </div>
+    <form action="{% url 'browse_fliter' %}" method="POST">
+    {% csrf_token %}
+    <div class="browse-area">
+    <div class="container-browse">
+        <div class="movie-type">
+            <p>Type: </p>
+            <input type="radio" id="all" name="movie-type" value="All" checked>
+            <label for="all">All  </label>
+            {% for type in types %}
+            <input type="radio" id="{{type.type}}" name="movie-type" value="{{type.type}}">
+            <label for="{{type.type}}">{{type.type}}</label>
+            {% endfor %}
+        </div>
+        <div class="quality">
+            <p>Quality: </p>
+            <input type="radio" id="all1" name="quality" value="All" checked>
+            <label for="all1">All</label>
+            <input type="radio" id="HD" name="quality" value="HD">
+            <label for="HD">HD</label>
+            <input type="radio" id="CAM" name="quality" value="CAM">
+            <label for="CAM">CAM</label>
+        </div>
+        <div class="released">
+            <p>Released: </p>
+            <input type="radio" id="all2" name="year" value="All" checked>
+            <label for="all">All</label>
+            {% for year in year_list %}
+            <input type="radio" id="{{year.year}}" name="year" value="{{year.year}}">
+            <label for="{{year.year}}">{{year.year}}</label>
+            {% endfor %}
+        </div>
+        <div class="genre">
+            <p>Genre: </p>
+            {% for genre in genres %}
+            <input type="checkbox" id="{{genre}}" name="genre" value="{{genre}}">
+            <label for={{genre}}>{{genre}}</label>
+            {% endfor %}
+        </div>
+        <div class="country">
+            <p>Country: </p>
+            {% for country in countries %}
+            <input type="checkbox" id="{{country}}" name="country" value="{{country}}">
+            <label for={{country}}>{{country}}</label>
+            {% endfor %}
+        </div>
+        <button type="submit">Browse</button> 
+    </div>
+    </div>
+    </form>
+    <div class="container-sidebar">
+        <form action="{% url 'search' %}" method="GET" req>
+            {% csrf_token %}
+            <div class="sidebar-top">
+                <div style="display: flex; gap:0.5rem">
+                <input style="padding-left: 10px;" name="search" type="text" placeholder="Search Movies or TV Shows" required value="{{ request.GET.search }}"> 
+                <button id="search" type="submit"><img src="{% static 'img/search.png' %}"></button></form>
+                </div>
+            <img id="menu" src="{% static 'img/menu.png' %}">
+            </div>
+        
+        <div class="sidebar">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'movies' %}">Movies</a></li>
+            <li><a href="{% url 'tv_shows' %}">TV Shows</a></li>
+            <li><a id="browse1" href="javascript:void(0)">Browse</a></li>
+            <li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}" id="login">Profile</a></li>
+                {% else %}
+                
+                {% endif %}
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" id="login">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}" id="login">Login</a>
+                {% endif %}</li>
+            
+                
+        </ul>
+        </div>
+    </div>    
+    {% block content %}
+    
+    {% endblock %}
+
+    <h2>Popular Movie</h2>
+    <h2>Trending Movie</h2>
+    <h2>Movie</h2>
+    <h2>TV Shows</h2>
 
 </body>
 </html>
