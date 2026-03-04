@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['moviekt.up.railway.app','localhost', '127.0.0.1','www.4allmovie.com']
+ALLOWED_HOSTS = ['moviekt.up.railway.app','localhost', '127.0.0.1','www.4allmovie.com','4allmovie.com']
 CSRF_TRUSTED_ORIGINS = ['https://moviekt.up.railway.app','https://www.4allmovie.com','https://4allmovie.com']
 
 CSRF_COOKIE_DOMAIN = ".4allmovie.com"
