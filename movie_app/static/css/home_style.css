@@ -273,8 +273,8 @@ input[type="checkbox"] {
 }
 
 .wrapper-slice .content .poster{
-    width: calc(150px + 10vw);
-    height: calc(225px + 10vw);
+    width: calc(150px + 7vw);
+    height: calc(225px + 7vw);
     overflow: hidden;
     margin: 2em;  
 }
@@ -572,7 +572,7 @@ footer{
 }
 
 
-@media screen and (max-height: 720px) {
+@media screen and (max-height: 540px) {
     .wrapper-slice .content .poster{
         width: 70px;
         height: 100px;
