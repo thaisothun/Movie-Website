@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['moviekt.up.railway.app','localhost', '127.0.0.1','www.4allmovie.com']
-CSRF_TRUSTED_ORIGINS = ['https://moviekt.up.railway.app','www.4allmovie.com']
+CSRF_TRUSTED_ORIGINS = ['https://moviekt.up.railway.app','https://www.4allmovie.com']
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'movie_app',
     'django_cleanup.apps.CleanupConfig',
+    'django_bunny_storage',
 ]
 
 MIDDLEWARE = [
