@@ -592,3 +592,14 @@ footer{
     height: calc(215px + 10vw);
     }
 }
+
+
+@media screen and (max-height: 840px) {
+    .wrapper-slice .content .poster{
+        min-width: 50px;
+        min-height: 100px;
+    }
+
+}
+
+
