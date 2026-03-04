@@ -593,7 +593,6 @@ footer{
     }
 }
 
-
 @media screen and (max-height: 840px) {
     .wrapper-slice .content .poster{
         min-width: 50px;
