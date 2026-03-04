@@ -252,3 +252,11 @@
         height: auto;
     }
 }
+
+
+@media screen and (max-height: 840px) {
+    #tv-layout {
+        display: none;
+    }
+
+}

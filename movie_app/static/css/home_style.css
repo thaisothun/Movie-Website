@@ -511,7 +511,7 @@ footer{
     cursor: pointer;
 }
 
-@media screen and (max-width: 575px) {
+@media screen and (max-width: 620px) {
     .container-navbar .logo {
         visibility: hidden;
     }
@@ -559,18 +559,36 @@ footer{
     }
 }
 
-@media screen and (max-width: 1030px) {
+@media screen and (max-width: 1034px) {
     .container-slice .nav-btn{
         left:40%;
     }
 
     .wrapper-movie-card .movie-card{
-    width: calc(170px + 10vw);
-    height: calc(305px + 10vw);
+    width: calc(100px + 10vw);
+    height: calc(235px + 10vw);
     }
 
     .movie-card .poster{
-    width: calc(170px + 10vw);
-    height: calc(215px + 10vw);   
+    width: calc(100px + 10vw);
+    height: calc(145px + 10vw);   
+    }
+    .wrapper-link, .wrapper-login-search{
+        display: none;
+    }
+    .sidebar-top{
+        display: flex;
+
+    }
+    .container-sidebar img{
+        display: block;
+    }    
+    .container-slice .content{
+        width: 100%;
+        justify-content: center;
+    }
+
+    .wrapper-slice{
+        height: 93vh;
     }
 }

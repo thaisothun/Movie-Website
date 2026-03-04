@@ -43,10 +43,12 @@
             {% endfor %}
             </div>
             <div class="animation">
+            <div id="tv-layout">
             <h4>Directors</h4>
             <small>{{movie.director}}</small>
             <h4>Release Date</h4>
             <small>{{movie.release_date}}</small>
+            </div>
             <h4>Studios</h4>
             {% for studio in movie.studio.all %}
             <small><a href="{% url 'studio' name=studio.name %}">{{studio.name}}</a></small>
