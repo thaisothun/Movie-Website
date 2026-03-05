@@ -134,16 +134,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'https://4allmovie.b-cdn.net/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIR = [
     os.path.join(BASE_DIR, 'static')
 ]
 
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-MEDIA_URL = 'https://4allmovie.b-cdn.net/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STORAGES = {
     "default": {
@@ -160,6 +157,9 @@ STORAGES = {
         },
     },
 }
+
+MEDIA_URL = 'https://4allmovie.b-cdn.net/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
