@@ -73,9 +73,9 @@ def home(request):
     movies = Movie.objects.all().prefetch_related('genres').order_by('-views')[:5]
     user_profile = get_profile(request)
     type_movie = MovieType.objects.get(type= 'Movies')
-    movie_type = Movie.objects.filter(type=type_movie)[:5]
+    movie_type = Movie.objects.filter(type=type_movie).order_by('-id')[:5]
     type_tv_show = MovieType.objects.get(type= 'TV Shows')
-    movie_tv_show = Movie.objects.filter(type=type_tv_show)[:5]
+    movie_tv_show = Movie.objects.filter(type=type_tv_show).order_by('-id')[:5]
     popular_movie = get_popular_movie()
     trending_movie =get_trending_movie()
     ratings = []
@@ -204,7 +204,7 @@ def studio(request, name):
 def movies(request):
     types, year_list, genres, countries = browse()
     type_movie = MovieType.objects.get(type= 'Movies')
-    movies = Movie.objects.filter(type=type_movie)
+    movies = Movie.objects.filter(type=type_movie).order_by('-id')
     user_profile = get_profile(request)
 
     context ={
@@ -238,7 +238,7 @@ def watchlist(request):
 def tv_shows(request):
     types, year_list, genres, countries = browse()
     type_tv_show = MovieType.objects.get(type= 'TV Shows')
-    movies = Movie.objects.filter(type=type_tv_show)
+    movies = Movie.objects.filter(type=type_tv_show).order_by('-id')
     user_profile = get_profile(request)
 
     context ={

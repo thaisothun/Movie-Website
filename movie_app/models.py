@@ -28,11 +28,12 @@ def actor_directory_path(instance, filename):
 class Actor(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    gender = models.CharField(choices=[('Male','Male'),('Femal','Femal')])
+    gender = models.CharField(choices=[('Male','Male'),('Female','Female')])
     brith_day = models.DateField()
     profile_picture = models.ImageField(upload_to=actor_directory_path)
     class Meta:
-         ordering = ['first_name', '-last_name']
+        ordering = ['first_name', '-last_name']
+        unique_together = [['first_name', 'last_name']]
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -42,17 +43,18 @@ class Director(models.Model):
     last_name = models.CharField(max_length=100)
     class Meta:
         ordering = ['first_name', '-last_name']
+        unique_together = [['first_name', 'last_name']]
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
 class MovieType(models.Model):
-    type = models.CharField(max_length=100)
+    type = models.CharField(max_length=100, unique=True)
     def __str__(self):
         return f'{self.type}'
 
 class Country(models.Model):
-    country = models.CharField(max_length=100)
+    country = models.CharField(max_length=100, unique=True)
     def __str__(self):
         return f'{self.country}'
 
@@ -87,7 +89,7 @@ class Movie(models.Model):
     actors = models.ManyToManyField(Actor, related_name='movies')
     studio = models.ManyToManyField(Studio, related_name='movies')
     # Optional field for storing an external API ID (e.g., TMDb ID)
-    tmdb_id = models.CharField(max_length=50, blank=True, null=True)
+    tmdb_id = models.CharField(max_length=50,unique=True)
     hls_playlist = models.CharField()
     bunny_embed_code = models.CharField(default='bunny embed url')
     trailer_url = models.CharField(blank=True,null=True,default='youtube url')
@@ -130,7 +132,7 @@ def subtitle_directory_path(instance, filename):
     return f'movies/{instance.movie.title}/subtitles/{filename}'
 
 class Language(models.Model):
-    language_choice = models.CharField(max_length=100)
+    language_choice = models.CharField(max_length=100,unique=True)
     def __str__(self):
         return f'{self.language_choice}'
 
