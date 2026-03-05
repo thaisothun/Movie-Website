@@ -142,7 +142,7 @@ STATICFILES_DIR = [
 
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-MEDIA_URL = 'https://4allmovie.b-cdn.net/media/'
+MEDIA_URL = 'https://4allmovie.b-cdn.net/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STORAGES = {
