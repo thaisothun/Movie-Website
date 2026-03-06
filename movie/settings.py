@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'movie_app',
-    'django_bunny_storage',
     'django_cleanup.apps.CleanupConfig',
     
 ]
