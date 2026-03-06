@@ -2,7 +2,7 @@
 .wrapper-movie{
     position: relative;
     width: 100vw;
-    height: 83.5vh;
+    
     opacity: 1;
 }
 
@@ -156,6 +156,7 @@
     height: 7em;
     z-index: 1;
     object-fit: cover;
+    filter: brightness(60%);
 }
 
 .wrapper-movie .content-movie .actor-card p{
@@ -247,6 +248,20 @@
     }
 
     .wrapper-movie{
-        height: 85vh;
+        min-height: 85vh;
+        height: auto;
     }
+}
+
+
+@media screen and (max-height: 840px) {
+    #tv-layout {
+        display: none;
+        
+    }
+
+    .wrapper-movie{
+        height: auto;
+    }
+
 }

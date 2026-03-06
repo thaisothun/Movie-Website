@@ -2,10 +2,17 @@
 .playing{
     position: relative;
     display: flex;
-    justify-content: center; 
+    padding-top: 100px; 
     align-items: center;
     flex-direction: column;
     min-height: 83.5vh;
+}
+
+.player{
+    position:relative; 
+    width: 600px; 
+    height: 300px;
+    margin-top: 20px;
 }
 
 @media screen and (max-width: 840px) {
@@ -15,4 +22,19 @@
     }
 
     
+}
+
+@media screen and (max-width: 605px) {
+    .player{
+        width: 380px;
+        height: 80px;
+    }
+
+}
+
+@media screen and (max-height: 580px) {
+    .playing{
+        padding: 2rem;
+    }
+
 }
