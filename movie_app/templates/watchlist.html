@@ -9,6 +9,10 @@
 <div class="popular-movies" style="min-height: 85vh ;">
     <h2>{{user}}'s watchlist >></h2>
     <div class="wrapper-movie-card">
+        <div class="movie-card">
+            <script async="async" data-cfasync="false" src="https://abovemyselfsadness.com/8ecc8c56047d70d0e155d74b0457506d/invoke.js"></script>
+            <div id="container-8ecc8c56047d70d0e155d74b0457506d"></div>
+        </div>
         {% for movie in movies %}
         <a href="{% url 'movie' title=movie.movie.title pk=movie.movie.id %}"><div class="movie-card">
             <div class="poster">
