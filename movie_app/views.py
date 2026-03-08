@@ -7,8 +7,14 @@ from django.urls import reverse
 from django.contrib import messages
 import requests
 import json
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.http import JsonResponse
 
 # Create your views here.
+
+@ensure_csrf_cookie
+def csrf(request):
+    return JsonResponse({"detail": "CSRF cookie set"})
 
 def index(request):
     return redirect('home')
