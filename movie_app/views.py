@@ -6,10 +6,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.urls import reverse 
 from django.contrib import messages
 import requests
-import json
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.http import JsonResponse
-from django.views.decorators.csrf import requires_csrf_token
 
 # Create your views here.
 
@@ -71,7 +68,7 @@ def get_trending_movie():
 
     return trending_movie
 
-@requires_csrf_token
+@ensure_csrf_cookie
 def home(request):
     types, year_list, genres, countries = browse()
     movies = Movie.objects.all().prefetch_related('genres').order_by('-views')[:5]
@@ -314,7 +311,7 @@ def trending(request):
 
     return render(request, 'trending.html', context)
 
-@requires_csrf_token
+@ensure_csrf_cookie
 def browse_fliter(request):
     types, year_list, genres, countries = browse()
     movie_type = request.POST.get('movie-type')
@@ -429,6 +426,7 @@ def browse_fliter(request):
 
     return render(request, 'browse_fliter.html', context)
 
+@ensure_csrf_cookie
 def login(request):
     # login
     form_login = loginForm()
