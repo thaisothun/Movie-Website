@@ -2,7 +2,7 @@ from django.contrib.sitemaps import Sitemap
 from .models import Movie, Actor, Genre, Studio
 
 class MovieSitemap(Sitemap):
-    changefreq = "weekly"
+    changefreq = "daily"
     priority = 0.8
     # Optional: set protocol to 'https' for production
     # protocol = 'https'
@@ -15,7 +15,7 @@ class MovieSitemap(Sitemap):
         return f"/movie-detail/{obj.id}/{obj.slug}" # Explicitly define the URL path
     
 class ActorSitemap(Sitemap):
-    changefreq = "weekly"
+    changefreq = "daily"
     priority = 0.8
 
     def items(self):
@@ -26,7 +26,7 @@ class ActorSitemap(Sitemap):
         return f"/actor/{obj.first_name}-{obj.last_name}" # Explicitly define the URL path
 
 class GenreSitemap(Sitemap):
-    changefreq = "weekly"
+    changefreq = "daily"
     priority = 0.8
 
     def items(self):
@@ -37,7 +37,7 @@ class GenreSitemap(Sitemap):
         return f"/genre/{obj.genre_choice}" # Explicitly define the URL path
     
 class StudioSitemap(Sitemap):
-    changefreq = "weekly"
+    changefreq = "daily"
     priority = 0.8
 
     def items(self):
