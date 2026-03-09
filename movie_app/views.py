@@ -9,12 +9,9 @@ import requests
 import json
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
+from django.views.decorators.csrf import requires_csrf_token
 
 # Create your views here.
-
-@ensure_csrf_cookie
-def csrf(request):
-    return JsonResponse({"detail": "CSRF cookie set"})
 
 def index(request):
     return redirect('home')
@@ -316,9 +313,8 @@ def trending(request):
 
     return render(request, 'trending.html', context)
 
-@ensure_csrf_cookie
+@requires_csrf_token
 def browse_fliter(request):
-
     types, year_list, genres, countries = browse()
     movie_type = request.POST.get('movie-type')
     movie_quality = request.POST.get('quality')
