@@ -19,7 +19,6 @@ def csrf(request):
 def index(request):
     return redirect('home')
 
-@ensure_csrf_cookie
 def browse():
     types = MovieType.objects.all()
     current_year = date.today().year +1
