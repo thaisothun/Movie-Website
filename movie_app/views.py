@@ -316,6 +316,7 @@ def trending(request):
 
     return render(request, 'trending.html', context)
 
+@ensure_csrf_cookie
 def browse_fliter(request):
 
     types, year_list, genres, countries = browse()
