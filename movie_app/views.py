@@ -253,6 +253,7 @@ def tv_shows(request):
     
     return render(request, 'tv_shows.html', context)
 
+@ensure_csrf_cookie
 def search(request):
     types, year_list, genres, countries = browse()
     search1 = request.GET.get('search')
@@ -496,6 +497,7 @@ def add_watchlist(request, pk, title):
         messages.info(request, 'You need to login to perform the action')
         return redirect(reverse('movie',  kwargs={'pk':pk, 'title': title}))
     
+@ensure_csrf_cookie    
 def profile(request):
     types, year_list, genres, countries = browse()
     user = request.user.userprofile
@@ -521,6 +523,7 @@ def profile(request):
 
     return render(request, 'profile.html', context)
 
+@ensure_csrf_cookie
 def change_password(request):
     types, year_list, genres, countries = browse()
     form = CustomPasswordChangeForm(user=request.user)

@@ -33,11 +33,6 @@ ALLOWED_HOSTS = ['moviekt.up.railway.app','localhost', '127.0.0.1','www.4allmovi
 CSRF_TRUSTED_ORIGINS = ['https://moviekt.up.railway.app','https://*.4allmovie.com','https://4allmovie.com']
 CORS_ALLOWED_ORIGINS = [ "https://www.4allmovie.com", "https://4allmovie.com" ] 
 
-CSRF_COOKIE_DOMAIN = ".4allmovie.com"
-SESSION_COOKIE_DOMAIN = ".4allmovie.com"
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = "None"
-
 # Application definition
 
 INSTALLED_APPS = [
