@@ -34,6 +34,7 @@ CSRF_TRUSTED_ORIGINS = ['https://moviekt.up.railway.app','https://*.4allmovie.co
 CSRF_COOKIE_DOMAIN = ".4allmovie.com"
 SESSION_COOKIE_DOMAIN = ".4allmovie.com"
 CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = "None"
 
 # Application definition
 
