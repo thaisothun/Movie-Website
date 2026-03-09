@@ -106,7 +106,7 @@ def home(request):
     
     return render(request, 'home.html',context)
 
-def movie_detail(request,title,pk):
+def movie_detail(request,pk,title):
     movies = Movie.objects.filter(id=pk).prefetch_related('genres')
     watchlist_movie = Movie.objects.get(id=pk)
     types, year_list, genres, countries = browse()
@@ -152,7 +152,7 @@ def playing(request, pk, title):
     
     return render(request, 'playing.html', context)
 
-def genre(request, movie_genre1,pk):
+def genre(request, movie_genre1):
     types, year_list, genres, countries = browse()
     a = Genre.objects.get( genre_choice=movie_genre1)
     movies= Movie.objects.filter(genres=a)
@@ -170,7 +170,7 @@ def genre(request, movie_genre1,pk):
 
     return render(request, 'genre.html', context)
 
-def actor(request, actor_first_name, actor_last_name,pk):
+def actor(request, actor_first_name, actor_last_name):
     types, year_list, genres, countries = browse()
     a = Actor.objects.get(first_name=actor_first_name, last_name=actor_last_name)
     movies = Movie.objects.filter(actors=a)

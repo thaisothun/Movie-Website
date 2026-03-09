@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="popular-movies" style="min-height: 85vh ;">
-    <h2>{{movie_genre1}} >></h2>
+    <h2>{{movie_genre1 |title  }} >></h2>
     <div class="wrapper-movie-card">
         <div class="movie-card">
             <script async="async" data-cfasync="false" src="https://abovemyselfsadness.com/8ecc8c56047d70d0e155d74b0457506d/invoke.js"></script>
@@ -24,7 +24,7 @@
                 <p>{{movie.title}}</p>
                 <hr>
                 {% for genre in movie.genres.all %}
-                <small>{{genre.genre_choice}}</small>
+                <small>{{genre.genre_choice |title }}</small>
                 {% endfor %}
             </div>
         </div></a>

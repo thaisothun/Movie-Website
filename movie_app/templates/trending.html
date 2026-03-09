@@ -24,7 +24,7 @@
                 <p>{{movie.title}}</p>
                 <hr>
                 {% for genre in movie.genres.all %}
-                <small>{{genre.genre_choice}}</small>
+                <small>{{genre.genre_choice|title}}</small>
                 {% endfor %}
             </div>
         </div></a>

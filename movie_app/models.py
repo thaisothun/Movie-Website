@@ -5,7 +5,7 @@ import os
 from django.db.models.signals import post_save
 
 class Genre(models.Model):
-    genre_choice = models.CharField(max_length=50, unique=True)
+    genre_choice = models.CharField(max_length=50, unique=True, help_text='Please use lowercase')
     class Meta:
         ordering = ['genre_choice']
 
@@ -24,13 +24,13 @@ def actor_directory_path(instance, filename):
     # Files will be uploaded MEDIA_ROOT for actor profile picture 
     return f'actors/{instance.first_name}_{instance.last_name}/{filename}'
     
-
 class Actor(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     gender = models.CharField(choices=[('Male','Male'),('Female','Female')])
     brith_day = models.DateField()
     profile_picture = models.ImageField(upload_to=actor_directory_path)
+    
     class Meta:
         ordering = ['first_name', '-last_name']
         unique_together = [['first_name', 'last_name']]
@@ -95,6 +95,7 @@ class Movie(models.Model):
     trailer_url = models.CharField(blank=True,null=True,default='youtube url')
     views = models.IntegerField(default=0)
     like = models.ManyToManyField(User, related_name='movies', blank=True)
+    slug = models.CharField(default='example:green-land')
     
     def __str__(self):
         return self.title
@@ -103,6 +104,8 @@ class Movie(models.Model):
     def hls_url(self):
         # Returns the full URL to the m3u8 file
         return f'{settings.MEDIA_URL}{self.hls_playlist.name}'
+    
+
 
 def user_profile_directory_path(instance, filename):
     # Files will be uploaded to MEDIA_ROOT for profile picture 

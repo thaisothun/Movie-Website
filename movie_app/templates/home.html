@@ -29,10 +29,10 @@
             <p>{{movie.description}}</p>
             <h4>Genres</h4>
             {% for genre in movie.genres.all %}
-            <small>{{genre.genre_choice}}</small>
+            <small>{{genre.genre_choice|title }}</small>
             {% endfor %}
             <div class="poster">
-                <a class="pause-auto" href="{% url 'movie' title=movie.title pk=movie.id %}" > <img src="{{movie.poster.url}}"> </a>
+                <a class="pause-auto" href="{% url 'movie' title=movie.slug pk=movie.id %}" > <img src="{{movie.poster.url}}"> </a>
             </div>
             
         </div>
@@ -57,7 +57,7 @@
     <div class="wrapper-movie-card">
         <div id="view-all"><a href="{% url 'popular' %} ">View All </a></div>
         {% for movie in popular_movie %}
-        <a href="{% url 'movie' title=movie.title pk=movie.id %}"><div class="movie-card">
+        <a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
             <div class="poster">
                 <img src="{{movie.poster.url}}">
                 <p class="qulity">{{movie.qulity}}</p>
@@ -66,7 +66,7 @@
                 <p>{{movie.title}}</p>
                 <hr>
                 {% for genre in movie.genres.all %}
-                <small>{{genre.genre_choice}}</small>
+                <small>{{genre.genre_choice|title }}</small>
                 {% endfor %}
             </div>
         </div></a>
@@ -79,7 +79,7 @@
     <div class="wrapper-movie-card">
         <div id="view-all"><a href="{% url 'trending' %}">View All</a></div>
         {% for movie in trending_movie %}
-        <a href="{% url 'movie' title=movie.title pk=movie.id %}"><div class="movie-card">
+        <a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
             <div class="poster">
                 <img src="{{movie.poster.url}}">
                 <p class="qulity">{{movie.qulity}}</p>
@@ -88,7 +88,7 @@
                 <p>{{movie.title}}</p>
                 <hr>
                 {% for genre in movie.genres.all %}
-                <small>{{genre.genre_choice}}</small>
+                <small>{{genre.genre_choice|title }}</small>
                 {% endfor %}
             </div>
         </div></a>
@@ -101,7 +101,7 @@
     <div class="wrapper-movie-card">
         <div id="view-all"><a href="{% url 'movies' %}">View All</a></div>
         {% for movie in movie_type %}
-        <a href="{% url 'movie' title=movie.title pk=movie.id %}"> <div class="movie-card">
+        <a href="{% url 'movie' title=movie.slug pk=movie.id %}"> <div class="movie-card">
             <div class="poster">
                 <img src="{{movie.poster.url}}">
                 <p class="qulity">{{movie.qulity}}</p>
@@ -110,7 +110,7 @@
                 <p>{{movie.title}}</p>
                 <hr>
                 {% for genre in movie.genres.all %}
-                <small>{{genre.genre_choice}}</small>
+                <small>{{genre.genre_choice|title }}</small>
                 {% endfor %}
             </div>
         </div></a>
@@ -126,7 +126,7 @@
     <div class="wrapper-movie-card">
         <div id="view-all"><a href="{% url 'tv_shows' %}">View All</a></div>
         {% for movie in movie_tv_show %}
-        <a href="{% url 'movie' title=movie.title pk=movie.id %}"><div class="movie-card">
+        <a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
             <div class="poster">
                 <img src="{{movie.poster.url}}">
                 <p class="qulity">{{movie.qulity}}</p>
@@ -135,7 +135,7 @@
                 <p>{{movie.title}}</p>
                 <hr>
                 {% for genre in movie.genres.all %}
-                <small>{{genre.genre_choice}}</small>
+                <small>{{genre.genre_choice|title }}</small>
                 {% endfor %}
             </div>
         </div></a>

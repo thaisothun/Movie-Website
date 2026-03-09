@@ -40,7 +40,7 @@
             <div class="animation">
             <h4>Genres</h4>
             {% for genre in movie.genres.all %}
-            <small><a href="{% url 'genre' movie_genre1=genre.genre_choice pk=genre.id %}">{{genre.genre_choice}}</a></small>
+            <small><a href="{% url 'genre'  movie_genre1=genre.genre_choice %}">{{genre.genre_choice |upper }}</a></small>
             {% endfor %}
             </div>
             <div class="animation">
@@ -59,7 +59,7 @@
             <h4>Actors</h4>
                 <div class="actor">
                     {% for actor in movie.actors.all %}
-                    <a href="{% url 'actor' actor_first_name=actor.first_name actor_last_name=actor.last_name pk=actor.id %}"><div class="actor-card">
+                    <a href="{% url 'actor' actor_first_name=actor.first_name actor_last_name=actor.last_name %}"><div class="actor-card">
                         <img src="{{actor.profile_picture.url}}">
                         <p>{{actor.first_name}} {{actor.last_name}}</p>                        
                     </div>
