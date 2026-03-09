@@ -4,7 +4,7 @@ from .import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('home', views.home, name='home'),
-    path('<str:pk>/<str:title>/', views.movie_detail, name='movie'),
+    path('movie-detail/<str:pk>/<str:title>/', views.movie_detail, name='movie'),
     path('playing/<str:pk>/<str:title>/', views.playing, name='playing'),
     path('genre/<str:pk>/<str:movie_genre1>/', views.genre, name='genre'),
     path('actor/<str:pk>/<str:actor_first_name>/<str:actor_last_name>/', views.actor, name='actor'),
