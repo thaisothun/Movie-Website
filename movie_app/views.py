@@ -71,6 +71,7 @@ def get_trending_movie():
 
     return trending_movie
 
+@requires_csrf_token
 def home(request):
     types, year_list, genres, countries = browse()
     movies = Movie.objects.all().prefetch_related('genres').order_by('-views')[:5]
