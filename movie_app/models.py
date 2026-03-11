@@ -21,8 +21,9 @@ class Studio(models.Model):
         return self.name
     
 def actor_directory_path(instance, filename):
-    # Files will be uploaded MEDIA_ROOT for actor profile picture 
-    return f'actors/{instance.first_name}_{instance.last_name}/{filename}'
+    ext = filename.split('.')[-1]
+    new_filename = f'{instance.first_name}-{instance.last_name}.{ext}'
+    return f'actors/{instance.first_name}_{instance.last_name}/{new_filename}'
     
 class Actor(models.Model):
     first_name = models.CharField(max_length=100)
@@ -63,12 +64,14 @@ def hls_directory_path(instance, filename):
     return f'movies/{instance.title}/media/{filename}'
 
 def poster_directory_path(instance, filename):
-    # Files will be uploaded to MEDIA_ROOT for poster 
-    return f'movies/{instance.title}/poster/{filename}'
+    ext = filename.split('.')[-1]
+    new_filename = f'{instance.slug}.{ext}' 
+    return f'movies/{instance.title}/poster/{new_filename}'
 
 def backdrop_directory_path(instance, filename):
-    # Files will be uploaded to MEDIA_ROOT for backdrop 
-    return f'movies/{instance.title}/backdrop/{filename}'
+    ext = filename.split('.')[-1]
+    new_filename = f'backdrop.{ext}'
+    return f'movies/{instance.title}/backdrop/{new_filename}'
 
 class Movie(models.Model):
     title = models.CharField(max_length=255, help_text='Do not use < > : " / \ | ? * #, %, &, {, }, $, !, +, or emojis')
@@ -105,11 +108,10 @@ class Movie(models.Model):
         # Returns the full URL to the m3u8 file
         return f'{settings.MEDIA_URL}{self.hls_playlist.name}'
     
-
-
 def user_profile_directory_path(instance, filename):
-    # Files will be uploaded to MEDIA_ROOT for profile picture 
-    return f'profiles/{instance.user}/{filename}'
+    ext = filename.split('.')[-1]
+    new_filename = f'{instance.user}.{ext}'
+    return f'profiles/{instance.user}/{new_filename}'
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE, related_name='userprofile')

@@ -120,7 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
@@ -131,7 +130,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
@@ -145,7 +143,7 @@ AWS_DEFAULT_ACL = None
 AWS_S3_FILE_OVERWRITE = False
 AWS_S3_CUSTOM_DOMAIN = "4allmoviemedia.b-cdn.net/practical-folder-s87t8mgd"
 
-STATIC_URL = 'https://4allmovie.b-cdn.net/static/'
+STATIC_URL = '4allmovie.b-cdn.net/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIR = [
     os.path.join(BASE_DIR, 'static')
@@ -165,7 +163,11 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
         "OPTIONS": {
             'location': 'static', # Optional, stores static files in a 'static' subfolder
-            
+           
         },
     },
 }
+
+USE_I18N = True # Usually enabled by default
+USE_L10N = True # Usually enabled by default
+USE_THOUSAND_SEPARATOR = True

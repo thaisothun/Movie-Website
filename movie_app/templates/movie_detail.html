@@ -40,7 +40,7 @@
             <div class="animation">
             <h4>Genres</h4>
             {% for genre in movie.genres.all %}
-            <small><a href="{% url 'genre'  movie_genre1=genre.genre_choice %}">{{genre.genre_choice |upper }}</a></small>
+            <small><a href="{% url 'genre' movie_genre1=genre.genre_choice %}">{{genre.genre_choice |upper }}</a></small>
             {% endfor %}
             </div>
             <div class="animation">

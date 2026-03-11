@@ -1,0 +1,178 @@
+{% extends 'nav_bar.html' %}
+{% load static %}
+
+{% block title %}
+<link rel="stylesheet" href="{% static 'css/movie_style.css' %}">
+<title>Movies</title>
+<link rel="canonical" href="https://4allmovie.com/movie-detail" />
+{% endblock %}
+
+{% block content %}
+<div class="movie">
+    
+    <div class="wrapper-movie">   
+        {% if backdrops %}
+        <div class="backdrop-slice active2">
+            <img id="backdrop1" src="https://image.tmdb.org/t/p/original{{backdrops.backdrop1}}">
+        </div>
+        <div class="backdrop-slice">
+            <img id="backdrop2" src="https://image.tmdb.org/t/p/original{{backdrops.backdrop2}}">
+        </div>
+        <div class="backdrop-slice">
+            <img id="backdrop2" src="https://image.tmdb.org/t/p/original{{backdrops.backdrop3}}">
+        </div>
+        {% else %}
+        <div class="backdrop-slice active2">
+            <img id="backdrop1" src="{% static 'img/movie_review_bg.jpg' %}">
+        </div>
+        {% endif %}
+        <div class="content-movie">
+            <div class="animation">
+            <h2>{{upcoming_review_movie.title}}</h2>
+            <small>Running times {{upcoming_review_movie.runtime}} mm TMDB-Rating <span style="font-size: 1.5rem;"> {{upcoming_review_movie.vote_average}} &#9733; </span> </small><small style="font-size: 1.5rem; font-weight: 800; color: white; "></small>
+            </div>
+            <div id="description" class="animation">
+            <p>{{upcoming_review_movie.overview}}</p>
+            </div>
+            <div class="animation">
+            <h4>Genres</h4>
+            {% for genre in upcoming_review_movie.genres %}
+            <small><a href="{% url 'genre'  movie_genre1=genre.name %}">{{genre.name |title }}</a></small>
+            {% endfor %}
+            </div>
+            <div class="animation">
+            <div id="tv-layout">
+            <h4>Directors</h4>
+            <small>{{director_name}}</small>
+            <h4>Release Date</h4>
+            <small>{{upcoming_review_movie.release_date}}</small>
+            </div>
+            <h4>Studios</h4>
+            {% for studio in upcoming_review_movie.production_companies %}
+            <small><a href="{% url 'studio' name=studio.name %}">{{studio.name}}</a></small>
+            {% endfor %}
+            <br>
+            
+            <small>Budget: ${{upcoming_review_movie.budget}} with Revenue: ${{upcoming_review_movie.revenue}} </small>
+            </div>
+            <div class="animation">
+            <h4>Actors</h4>
+                <div class="actor">
+                    {% for actor in actors %}
+                    <a href="https://www.themoviedb.org/person/{{actor.actor_id}}"><div class="actor-card">
+                        <img src="https://image.tmdb.org/t/p/w300_and_h450_face{{actor.profile_path}}">
+                        <p>{{actor.name}}</span></p>                        
+                    </div>
+                    </a>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+            <div class="animation">
+            <div class="btn">
+                    <a id="review" href="javascript:void(0)"><img style="width: 20px; height: 20px; transform: translateY(3px);" src="{% static 'img/play.png' %}">Review</a>
+                    <a id="trailer" href="javascript:void(0)"> Trailer </a>    
+            </div>
+            </div>    
+        </div>
+        
+    </div>
+    <div class="ifram-trailer">
+    <iframe id="iframe" src="https://www.youtube.com/embed/{{trailer_id}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <a id="exit1" href="javascript:void(0)">Exit</a>
+    </div>
+    <div class="container-review">
+        <div id="content-review">
+            {% if review_contents%}
+            {% for content in review_contents %}
+            {% if content.avatar_path %}
+            <img src="https://secure.gravatar.com/avatar{{content.avatar_path}}">
+            {% else %}
+            <img src="{% static 'img/no_profile.png' %}">
+            {% endif %}
+            <h3>{{content.username}}</h3>
+            <small>{{content.date}}</small>
+            <p>{{content.content}} </p>
+            {% endfor %}
+            {% else %}
+            <p>There is no review.</p>
+            {% endif %}
+        </div>
+        <a id="add" href="https://www.themoviedb.org/movie/{{tmdb_id}}" target="_blank">Add</a>
+        <a id="exit2" href="javascript:void(0)">Exit</a>
+    </div>   
+    
+</div>
+
+
+    <script>
+        var iframs_btn = document.getElementById('trailer')
+        var iframs = document.querySelectorAll('.ifram-trailer')
+        var iframs_src = document.getElementById('iframe')
+        
+        iframs_btn.addEventListener('click', function(){
+            iframs[0].classList.add('show')
+        })
+
+        var iframs_btn_exit1 = document.getElementById('exit1')
+        iframs_btn_exit1.addEventListener('click', ()=>{
+            iframs[0].classList.remove('show')
+            iframs_src.src = iframs_src.src;
+        })
+
+        var ifram_review_btn = document.getElementById('review')
+        var ifram_review = document.querySelectorAll('.container-review')
+        ifram_review_btn.addEventListener('click', ()=>{
+            ifram_review[0].classList.add('show')
+        })
+
+        var ifram_btn_exit2 = document.getElementById('exit2')
+        ifram_btn_exit2.addEventListener('click', ()=>{
+            ifram_review[0].classList.remove('show')
+        })
+
+        var slices = document.querySelectorAll('.backdrop-slice');
+        var active = document.getElementsByClassName('active2');
+        current_slice = 1;
+        function autoSlice(){
+            [...active].forEach((acticSlice)=>{
+                acticSlice.classList.remove('active2')
+            })
+            slices[current_slice].classList.add('active2')
+            current_slice++;
+            if (slices.length == current_slice){
+                current_slice=0
+            }
+            if (current_slice>slices.length){
+                return
+            }    
+        }    
+        setInterval(autoSlice,5000)      
+
+        var user_status = '{{user_status}}'
+        if (user_status ==  'False'){
+            var link_watchlist = document.getElementById('like-watchlist')
+            var links = link_watchlist.querySelectorAll('a')
+            links.forEach((link)=>{
+                link.style.pointerEvents = 'none'
+                })
+            link_watchlist.addEventListener('mouseenter',()=>{
+                var watchlist_info = document.getElementsByClassName('watchlist')
+                watchlist_info[0].classList.add('active')
+            })
+            link_watchlist.addEventListener('mouseleave',()=>{
+                var watchlist_info = document.getElementsByClassName('watchlist')
+                watchlist_info[0].classList.remove('active')
+            })
+
+        if (user_status == 'True'){
+            var link_watchlist = document.getElementById('like-watchlist')
+            var links = link_watchlist.querySelectorAll('a')
+            links.forEach((link)=>{
+                link.style.pointerEvents = 'auto'
+            })
+        }  
+        
+        }
+    </script>
+{% endblock %}

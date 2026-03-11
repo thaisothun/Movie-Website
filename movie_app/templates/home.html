@@ -53,6 +53,30 @@
 <script src="https://jumblenewsletterdebark.com/67cef8b77971b9b66978985fbb403c7c/invoke.js"></script>
 </div>
 <div class="popular-movies">
+    <h2>Upcoming Movies Review >></h2>
+    <div class="wrapper-movie-card">
+        <div id="view-all"><a href="{% url 'upcoming_movie' %} ">View All </a></div>
+        {% for movie in upcoming_movie %}
+        <a href="{% url 'upcoming_review' tmdb_id=movie.id title=movie.slug %}"><div class="movie-card">
+            <div class="poster">
+                <img src="https://image.tmdb.org/t/p/original{{movie.poster}}">
+                
+            </div>
+            <div class="card-content">
+                <p>{{movie.title}}</p>
+                <hr>
+                <small>Release : {{movie.release_date}}</small>
+                
+            </div>
+        </div></a>
+        {% endfor %}
+         <div class="movie-card">
+            <script async="async" data-cfasync="false" src="https://jumblenewsletterdebark.com/8ecc8c56047d70d0e155d74b0457506d/invoke.js"></script>
+            <div id="container-8ecc8c56047d70d0e155d74b0457506d"></div>
+        </div>        
+    </div>
+</div>   
+<div class="popular-movies">
     <h2>Popular Movies >></h2>
     <div class="wrapper-movie-card">
         <div id="view-all"><a href="{% url 'popular' %} ">View All </a></div>
@@ -73,7 +97,7 @@
         {% endfor %}
                 
     </div>
-    
+</div>    
 <div class="popular-movies">
     <h2>Trending Movies >></h2>
     <div class="wrapper-movie-card">
@@ -115,10 +139,7 @@
             </div>
         </div></a>
         {% endfor %}
-        <div class="movie-card">
-            <script async="async" data-cfasync="false" src="https://jumblenewsletterdebark.com/8ecc8c56047d70d0e155d74b0457506d/invoke.js"></script>
-            <div id="container-8ecc8c56047d70d0e155d74b0457506d"></div>
-        </div>
+        
     </div>
 </div>
 <div class="popular-movies">

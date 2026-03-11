@@ -7,8 +7,7 @@ from django.urls import reverse
 from django.contrib import messages
 import requests
 from django.views.decorators.csrf import ensure_csrf_cookie
-
-# Create your views here.
+import random
 
 def index(request):
     return redirect('home')
@@ -42,7 +41,11 @@ def get_rating(pk):
     api_key = '7f3c4c10ff7da5d1a65cdbae1c27fad9' 
     url = f'https://api.themoviedb.org/3/movie/{tmdb_id}?api_key={api_key}'  
     rating_data = requests.get(url).json()
-    rating = round(rating_data['vote_average'], 1)
+    if rating_data:
+        rating = round(rating_data['vote_average'], 1)
+    else:
+        rating = None
+
     return rating
 
 def get_popular_movie():
@@ -68,15 +71,125 @@ def get_trending_movie():
 
     return trending_movie
 
+def get_now_playing_movie(count=None):
+    api_key = '7f3c4c10ff7da5d1a65cdbae1c27fad9'
+    url = f'https://api.themoviedb.org/3/movie/upcoming?api_key={api_key}'
+    upcoming_movie_data = requests.get(url).json()
+    upcoming_movie = []
+    if count is not None:
+        i=1
+        for data in upcoming_movie_data['results']:
+            slug = str(data['original_title']).replace(' ','-')
+            if i <= count:
+                i += 1
+                upcoming_movie.append({
+                        'id' : data['id'],
+                        'title' : data['original_title'],
+                        'poster' : data['poster_path'],
+                        'rating' : data['vote_average'],
+                        'release_date' : data['release_date'],
+                        'overview' : data['overview'],
+                        'slug' : slug
+                    })
+    else:
+        for data in upcoming_movie_data['results']:
+            title = str(data['original_title']).replace(' ','-')
+            print(title)
+            upcoming_movie.append({
+                            'id' : data['id'],
+                            'title' : title,
+                            'poster' : data['poster_path'],
+                            'rating' : data['vote_average'],
+                            'release_date' : data['release_date'],
+                            'overview' : data['overview'],
+                        })
+    
+    return upcoming_movie
+
+def get_movie_trailer(tmdb_id):
+    api_key = '7f3c4c10ff7da5d1a65cdbae1c27fad9'
+    url_trailer = f'https://api.themoviedb.org/3/movie/{tmdb_id}/videos?language=en-US&api_key={api_key}'
+    url_review_movie = f'https://api.themoviedb.org/3/movie/{tmdb_id}?api_key={api_key}'
+    url_actor = f'https://api.themoviedb.org/3/movie/{tmdb_id}/credits?api_key={api_key}'
+    url_image = f'https://api.themoviedb.org/3/movie/{tmdb_id}/images?api_key={api_key}'
+    url_review = f'https://api.themoviedb.org/3/movie/{tmdb_id}/reviews?api_key={api_key}'
+    
+    review_movie_data = requests.get(url_review_movie).json()
+    if review_content_data:
+        upcoming_review_movie = {
+            'title' : review_movie_data['original_title'],
+            'overview' : review_movie_data['overview'],
+            'genres' : review_movie_data['genres'],
+            'release_date' : review_movie_data['release_date'],
+            'runtime' : review_movie_data['runtime'],
+            'status' : review_movie_data['status'],
+            'vote_average' : round(review_movie_data['vote_average'],1),
+            'production_companies' : review_movie_data['production_companies'],
+            'backdrop_path' : review_movie_data['backdrop_path'],
+            'poster_path' : review_movie_data['poster_path'],
+            'budget' : review_movie_data['budget'],
+            'revenue' : review_movie_data['revenue'],
+        }
+    else:
+        upcoming_review_movie = None
+
+    trailer_movie_data = requests.get(url_trailer).json()
+    if trailer_movie_data['results']:
+        trailer_id = trailer_movie_data['results'][1]['key']
+    else:
+        trailer_id =None
+    
+    actor_data = requests.get(url_actor).json()
+    if actor_data:
+        director_filter = [data for data in actor_data['crew'] if data['job']=='Director']
+        director_name = director_filter[0]['name']
+        actors = []
+        for data in actor_data['cast'][:4]:
+            actors.append({
+                'actor_id' : data['id'],
+                'name' : data['name'],
+                'profile_path' : data['profile_path'],
+                'character' : data['character'],
+            })
+    else:
+        actors = None
+    
+    backdrop_data = requests.get(url_image).json()
+    if backdrop_data['backdrops']:
+        backdrop_len = (len(backdrop_data['backdrops']))
+        backdrops = {
+            'backdrop1' : backdrop_data['backdrops'][random.randint(1, backdrop_len)]['file_path'],
+            'backdrop2' : backdrop_data['backdrops'][random.randint(1, backdrop_len)]['file_path'],
+            'backdrop3' : backdrop_data['backdrops'][random.randint(1, backdrop_len)]['file_path'],
+        }
+    else:
+        backdrops= None
+    
+    review_content_data = requests.get(url_review).json()
+    if review_content_data:
+        review_contents = []
+        for data in review_content_data['results']:
+            review_contents.append({
+                'username' : data['author_details']['username'],
+                'avatar_path' : data['author_details']['avatar_path'],
+                'content' : data['content'],
+                'date' : data['updated_at'],
+            })
+    else:
+        review_contents = None
+    
+    return trailer_id, upcoming_review_movie, actors, backdrops, review_contents, director_name    
+    
 @ensure_csrf_cookie
 def home(request):
     types, year_list, genres, countries = browse()
-    movies = Movie.objects.all().prefetch_related('genres').order_by('-views')[:5]
+    movies = Movie.objects.all().prefetch_related('genres').order_by('-views')[:10]
     user_profile = get_profile(request)
     type_movie = MovieType.objects.get(type= 'Movies')
-    movie_type = Movie.objects.filter(type=type_movie).order_by('-id')[:5]
+    upcoming_movie = get_now_playing_movie(9)
+    movie_type = Movie.objects.filter(type=type_movie).order_by('-id')[:10]
     type_tv_show = MovieType.objects.get(type= 'TV Shows')
-    movie_tv_show = Movie.objects.filter(type=type_tv_show).order_by('-id')[:5]
+    movie_tv_show = Movie.objects.filter(type=type_tv_show).order_by('-id')[:10]
     popular_movie = get_popular_movie()
     trending_movie =get_trending_movie()
     ratings = []
@@ -96,7 +209,7 @@ def home(request):
         'movie_tv_show' : movie_tv_show,
         'popular_movie' : popular_movie,
         'trending_movie' : trending_movie,
-        
+        'upcoming_movie' : upcoming_movie,
         }
     
     return render(request, 'home.html',context)
@@ -148,11 +261,17 @@ def playing(request, pk, title):
     return render(request, 'playing.html', context)
 
 def genre(request, movie_genre1):
+    lowercase_movie_genre1 = str(movie_genre1).lower()
     types, year_list, genres, countries = browse()
-    a = Genre.objects.get( genre_choice=movie_genre1)
-    movies= Movie.objects.filter(genres=a)
-    user_profile = get_profile(request)
-
+    tmdb_id = request.session.get('temporary_data1')
+    title = request.session.get('temporary_data2')
+    try:
+        a = Genre.objects.get( genre_choice=lowercase_movie_genre1)
+        movies= Movie.objects.filter(genres=a)
+        user_profile = get_profile(request)
+    except:
+        return redirect(reverse('upcoming_review', kwargs={'tmdb_id':tmdb_id, 'title' : title}))
+    
     context ={
         'movies':movies,
         'types':types,
@@ -186,10 +305,16 @@ def actor(request, actor_first_name, actor_last_name):
 
 def studio(request, name):
     types, year_list, genres, countries = browse()
-    a = Studio.objects.get(name=name)
-    movies = Movie.objects.filter(studio=a)
-    user_profile = get_profile(request)
-
+    tmdb_id = request.session.get('temporary_data1')
+    title = request.session.get('temporary_data2')
+    try:
+        a = Studio.objects.get(name=name)    
+        movies = Movie.objects.filter(studio=a)
+        user_profile = get_profile(request)
+    except:
+        print('dfasdsd')
+        return redirect(reverse('upcoming_review', kwargs={'tmdb_id':tmdb_id, 'title' : title}))
+    
     context ={
         'movies':movies,
         'types':types,
@@ -391,7 +516,7 @@ def browse_fliter(request):
             movies = movies_all
 
     if (movie_type =='All' and movie_quality != 'All' and movie_year !='All'):
-        print('dfad')
+       
         movies_all = Movie.objects.filter(qulity=movie_quality,release_date__year =  movie_year)
         if movie_genre and movie_country:
             movies=movies_all.filter(genres__genre_choice__in=movie_genre, country__country__in = movie_country).distinct()
@@ -403,7 +528,7 @@ def browse_fliter(request):
             movies = movies_all
 
     if (movie_type =='All' and movie_quality != 'All' and movie_year =='All'):
-        print('dfad')
+        
         movies_all = Movie.objects.filter(qulity=movie_quality)
         if movie_genre and movie_country:
             movies=movies_all.filter(genres__genre_choice__in=movie_genre, country__country__in = movie_country).distinct()
@@ -548,3 +673,42 @@ def change_password(request):
     }
 
     return render(request, 'change_password.html', context)
+
+def upcoming_review(request, tmdb_id, title):
+    types, year_list, genres, countries = browse()
+    user_profile = get_profile(request)
+    trailer_id, upcoming_review_movie, actors, backdrops, review_contents, director_name = get_movie_trailer(tmdb_id)
+    request.session['temporary_data1'] = tmdb_id
+    request.session['temporary_data2'] = title
+    context = {
+        'trailer_id' : trailer_id,
+        'upcoming_review_movie' : upcoming_review_movie, 
+        'actors' : actors,
+        'backdrops' : backdrops,
+        'review_contents' : review_contents,
+        'tmdb_id' : tmdb_id,
+        'director_name' : director_name,
+        'user_profile' : user_profile,
+        'types':types,
+        'year_list':year_list,
+        'genres':genres,
+        'countries':countries,
+    }
+
+    return render(request, 'upcoming_review.html', context)
+
+def upcoming_movie(request):
+    types, year_list, genres, countries = browse()
+    user_profile = get_profile(request)
+    upcoming_movie = get_now_playing_movie()
+
+    context = {
+        'user_profile' : user_profile,
+        'types':types,
+        'year_list':year_list,
+        'genres':genres,
+        'countries':countries,
+        'upcoming_movie' : upcoming_movie,
+    }
+
+    return render(request, 'upcoming_movie.html', context)
