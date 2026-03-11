@@ -61,7 +61,8 @@
                     {% for actor in movie.actors.all %}
                     <a href="{% url 'actor' actor_first_name=actor.first_name actor_last_name=actor.last_name %}"><div class="actor-card">
                         <img src="{{actor.profile_picture.url}}">
-                        <p>{{actor.first_name}} {{actor.last_name}}</p>                        
+                        <p>{{actor.first_name}} {{actor.last_name}} {{actor.actor_slug}}</p>
+                                                
                     </div>
                     </a>
                     {% endfor %}

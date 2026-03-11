@@ -215,9 +215,7 @@ def home(request):
     return render(request, 'home.html',context)
 
 def movie_detail(request,pk,title):
-    movies = Movie.objects.filter(id=pk).prefetch_related('genres')
-    for data in movies:
-        print(data['actors'])
+    movies = Movie.objects.filter(id=pk).prefetch_related('genres')  
     watchlist_movie = Movie.objects.get(id=pk)
     types, year_list, genres, countries = browse()
     rating = get_rating(pk)
