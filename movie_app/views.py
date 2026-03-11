@@ -93,15 +93,15 @@ def get_now_playing_movie(count=None):
                     })
     else:
         for data in upcoming_movie_data['results']:
-            title = str(data['original_title']).replace(' ','-')
-            print(title)
+            slug = str(data['original_title']).replace(' ','-')
             upcoming_movie.append({
                             'id' : data['id'],
-                            'title' : title,
+                            'title' : data['original_title'],
                             'poster' : data['poster_path'],
                             'rating' : data['vote_average'],
                             'release_date' : data['release_date'],
                             'overview' : data['overview'],
+                            'slug' : slug
                         })
     
     return upcoming_movie
@@ -115,7 +115,7 @@ def get_movie_trailer(tmdb_id):
     url_review = f'https://api.themoviedb.org/3/movie/{tmdb_id}/reviews?api_key={api_key}'
     
     review_movie_data = requests.get(url_review_movie).json()
-    if review_content_data:
+    if review_movie_data:
         upcoming_review_movie = {
             'title' : review_movie_data['original_title'],
             'overview' : review_movie_data['overview'],
@@ -216,6 +216,8 @@ def home(request):
 
 def movie_detail(request,pk,title):
     movies = Movie.objects.filter(id=pk).prefetch_related('genres')
+    for data in movies:
+        print(data['actors'])
     watchlist_movie = Movie.objects.get(id=pk)
     types, year_list, genres, countries = browse()
     rating = get_rating(pk)
