@@ -12,8 +12,7 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('home', views.home, name='home'),
+    path('', views.home, name='home'),
     path('movie-detail/<str:pk>/<str:title>/', views.movie_detail, name='movie'),
     path('playing/<str:pk>/<str:title>/', views.playing, name='playing'),
     path('genre/<str:movie_genre1>/', views.genre, name='genre'),
