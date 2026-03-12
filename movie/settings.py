@@ -45,8 +45,7 @@ INSTALLED_APPS = [
     'movie_app',
     'django_cleanup.apps.CleanupConfig',
     'django.contrib.sites',
-    'django.contrib.sitemaps',
-    
+    'django.contrib.sitemaps',    
 ]
 
 MIDDLEWARE = [

@@ -3,34 +3,51 @@ from django.conf import settings
 from django.contrib.auth.models import User
 import os
 from django.db.models.signals import post_save
-
+from django.utils.text import slugify
+ 
 class Genre(models.Model):
     genre_choice = models.CharField(max_length=50, unique=True, help_text='Please use lowercase')
+    slug = models.SlugField(blank=True, null=True, default='click save to auto generate')
     class Meta:
         ordering = ['genre_choice']
 
     def __str__(self):
         return self.genre_choice
+    
+    def save(self, *args, **kwargs):
+        data = (self.genre_choice).lower()
+        slug = slugify(data)
+        self.slug = slug
+        super().save(*args, **kwargs)
 
 class Studio(models.Model):
     name = models.CharField(max_length=100, unique=True, help_text='The official name of the studio.')
+    slug = models.SlugField(blank=True, null=True, default='click save to auto generate')
+
     class Meta:
         ordering = ['name']
 
     def __str__(self):
         return self.name
     
+    def save(self, *args, **kwargs):
+        data = (self.name).lower()
+        slug = slugify(data)
+        self.slug = slug
+        super().save(*args, **kwargs)
+    
 def actor_directory_path(instance, filename):
     ext = filename.split('.')[-1]
     new_filename = f'{instance.first_name}-{instance.last_name}.{ext}'
     return f'actors/{instance.first_name}_{instance.last_name}/{new_filename}'
-    
+
 class Actor(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     gender = models.CharField(choices=[('Male','Male'),('Female','Female')])
     brith_day = models.DateField()
     profile_picture = models.ImageField(upload_to=actor_directory_path)
+    slug = models.SlugField(blank=True, null=True, default='click save to auto generate')
     
     class Meta:
         ordering = ['first_name', '-last_name']
@@ -38,6 +55,12 @@ class Actor(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+    
+    def save(self, *args, **kwargs):
+        data = (f'{self.first_name} {self.last_name}').lower()
+        slug = slugify(data)
+        self.slug = slug
+        super().save(*args, **kwargs)
 
 class Director(models.Model):
     first_name = models.CharField(max_length=100)
@@ -98,10 +121,16 @@ class Movie(models.Model):
     trailer_url = models.CharField(blank=True,null=True,default='youtube url')
     views = models.IntegerField(default=0)
     like = models.ManyToManyField(User, related_name='movies', blank=True)
-    slug = models.CharField(default='example:green-land')
+    slug = models.SlugField(blank=True, null=True, default='click save to auto generate')
     
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        data = (self.title).lower()
+        slug = slugify(data)
+        self.slug = slug
+        super().save(*args, **kwargs)
     
     @property
     def hls_url(self):

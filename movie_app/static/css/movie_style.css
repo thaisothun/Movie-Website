@@ -129,6 +129,15 @@
     margin-right: 0.5em;
 }
 
+.wrapper-movie #studio{
+    all:unset; 
+    cursor: pointer; 
+    background-color: var(--accent-color);
+    color : var(--base-color);
+    border-radius: 5px;
+    padding: 3px;
+}
+
 .content-movie #description{
     height: 110px;
     overflow-y: auto;

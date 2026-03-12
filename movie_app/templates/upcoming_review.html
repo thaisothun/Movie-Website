@@ -36,9 +36,15 @@
             </div>
             <div class="animation">
             <h4>Genres</h4>
+            <div style="display: flex; flex-direction: row;">
             {% for genre in upcoming_review_movie.genres %}
-            <small><a href="{% url 'genre'  movie_genre1=genre.name %}">{{genre.name |title }}</a></small>
+            <form Method="POST" action="{% url 'genre' slug=genre.slug %}">
+                {% csrf_token %}
+                <input type="hidden" value="{{genre.name}}" name="genre">
+                <small><button action="submit" id="studio" href="">{{genre.name |title }}</button></small>
+            </form>
             {% endfor %}
+            </div>
             </div>
             <div class="animation">
             <div id="tv-layout">
@@ -48,9 +54,15 @@
             <small>{{upcoming_review_movie.release_date}}</small>
             </div>
             <h4>Studios</h4>
+            <div style="display: flex; flex-direction: row;">
             {% for studio in upcoming_review_movie.production_companies %}
-            <small><a href="{% url 'studio' name=studio.name %}">{{studio.name}}</a></small>
+            <form Method="POST" action="{% url 'studio' slug=studio.slug %}">
+            {% csrf_token %}
+                <input type="hidden" value="{{studio.name}}" name="studio_name">
+                <small><button id="studio" action="submit">{{studio.name}}</button></small>
+            </form>
             {% endfor %}
+            </div>
             <br>
             
             <small>Budget: ${{upcoming_review_movie.budget}} with Revenue: ${{upcoming_review_movie.revenue}} </small>

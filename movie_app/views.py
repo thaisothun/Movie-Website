@@ -8,6 +8,7 @@ from django.contrib import messages
 import requests
 from django.views.decorators.csrf import ensure_csrf_cookie
 import random
+from django.utils.text import slugify
 
 def index(request):
     return redirect('home')
@@ -116,19 +117,33 @@ def get_movie_trailer(tmdb_id):
     
     review_movie_data = requests.get(url_review_movie).json()
     if review_movie_data:
+        genre = []
+        for data in review_movie_data['genres']:
+            genre.append({
+                'slug' : slugify(data['name']),
+                'name' : data['name'],
+                })
+        studio = []
+        for data in review_movie_data['production_companies']:
+            studio.append({
+                'slug' : slugify(data['name']),
+                'name' : data['name'],
+            })
+        
         upcoming_review_movie = {
             'title' : review_movie_data['original_title'],
             'overview' : review_movie_data['overview'],
-            'genres' : review_movie_data['genres'],
+            'genres' : genre,
             'release_date' : review_movie_data['release_date'],
             'runtime' : review_movie_data['runtime'],
             'status' : review_movie_data['status'],
             'vote_average' : round(review_movie_data['vote_average'],1),
-            'production_companies' : review_movie_data['production_companies'],
+            'production_companies' : studio,
             'backdrop_path' : review_movie_data['backdrop_path'],
             'poster_path' : review_movie_data['poster_path'],
             'budget' : review_movie_data['budget'],
             'revenue' : review_movie_data['revenue'],
+                
         }
     else:
         upcoming_review_movie = None
@@ -156,7 +171,9 @@ def get_movie_trailer(tmdb_id):
     
     backdrop_data = requests.get(url_image).json()
     if backdrop_data['backdrops']:
-        backdrop_len = (len(backdrop_data['backdrops']))
+        backdrop_len = (len(backdrop_data['backdrops']))-1
+        print(backdrop_len)
+        print(random.randint(1, backdrop_len))
         backdrops = {
             'backdrop1' : backdrop_data['backdrops'][random.randint(1, backdrop_len)]['file_path'],
             'backdrop2' : backdrop_data['backdrops'][random.randint(1, backdrop_len)]['file_path'],
@@ -183,7 +200,7 @@ def get_movie_trailer(tmdb_id):
 @ensure_csrf_cookie
 def home(request):
     types, year_list, genres, countries = browse()
-    movies = Movie.objects.all().prefetch_related('genres').order_by('-views')[:10]
+    movies = Movie.objects.all().prefetch_related('genres').order_by('-views')[:5]
     user_profile = get_profile(request)
     type_movie = MovieType.objects.get(type= 'Movies')
     upcoming_movie = get_now_playing_movie(9)
@@ -215,12 +232,17 @@ def home(request):
     return render(request, 'home.html',context)
 
 def movie_detail(request,pk,title):
+    print(title)
     movies = Movie.objects.filter(id=pk).prefetch_related('genres')  
     watchlist_movie = Movie.objects.get(id=pk)
     types, year_list, genres, countries = browse()
     rating = get_rating(pk)
     user_profile = get_profile(request)
-    user = request.user
+    for movie in movies:
+        tmdb_id = movie.tmdb_id
+    request.session['temporary_data1'] = tmdb_id
+    request.session['temporary_data2'] = title
+    user = request.user    
     if request.user.is_authenticated:
         user_status = True
         user_like = Movie.objects.get(id=pk).like.filter(id=user.id).exists()
@@ -231,7 +253,7 @@ def movie_detail(request,pk,title):
         user_status = False
     
     context ={
-        'movies':movies,
+        'movies': movies,
         'types':types,
         'year_list':year_list,
         'genres':genres,
@@ -260,13 +282,16 @@ def playing(request, pk, title):
     
     return render(request, 'playing.html', context)
 
-def genre(request, movie_genre1):
+def genre(request, slug):
+    movie_genre1 = request.POST.get('genre')
     lowercase_movie_genre1 = str(movie_genre1).lower()
+    print(lowercase_movie_genre1)
     types, year_list, genres, countries = browse()
     tmdb_id = request.session.get('temporary_data1')
     title = request.session.get('temporary_data2')
+    
     try:
-        a = Genre.objects.get( genre_choice=lowercase_movie_genre1)
+        a = Genre.objects.get(genre_choice=lowercase_movie_genre1)
         movies= Movie.objects.filter(genres=a)
         user_profile = get_profile(request)
     except:
@@ -284,7 +309,9 @@ def genre(request, movie_genre1):
 
     return render(request, 'genre.html', context)
 
-def actor(request, actor_first_name, actor_last_name):
+def actor(request,slug):
+    actor_first_name = request.POST.get('actor_first_name')
+    actor_last_name = request.POST.get('actor_last_name')
     types, year_list, genres, countries = browse()
     a = Actor.objects.get(first_name=actor_first_name, last_name=actor_last_name)
     movies = Movie.objects.filter(actors=a)
@@ -303,16 +330,17 @@ def actor(request, actor_first_name, actor_last_name):
     
     return render(request, 'actor_filter.html', context)
 
-def studio(request, name):
+def studio(request, slug):
     types, year_list, genres, countries = browse()
     tmdb_id = request.session.get('temporary_data1')
     title = request.session.get('temporary_data2')
     try:
+        name = request.POST.get('studio_name')
         a = Studio.objects.get(name=name)    
         movies = Movie.objects.filter(studio=a)
         user_profile = get_profile(request)
     except:
-        print('dfasdsd')
+        
         return redirect(reverse('upcoming_review', kwargs={'tmdb_id':tmdb_id, 'title' : title}))
     
     context ={

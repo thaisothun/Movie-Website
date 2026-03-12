@@ -39,9 +39,15 @@
             </div>
             <div class="animation">
             <h4>Genres</h4>
+            <div style="display: flex; flex-direction: row;">
             {% for genre in movie.genres.all %}
-            <small><a href="{% url 'genre' movie_genre1=genre.genre_choice %}">{{genre.genre_choice |upper }}</a></small>
+            <form Method="POST" action="{% url 'genre' slug=genre.slug %}">
+                {% csrf_token %}
+                <input type="hidden" value="{{genre.genre_choice}}" name="genre">
+                <small><button action="submit" id="studio" href="">{{genre.genre_choice |title }}</button></small>
+            </form>
             {% endfor %}
+            </div>
             </div>
             <div class="animation">
             <div id="tv-layout">
@@ -51,26 +57,37 @@
             <small>{{movie.release_date}}</small>
             </div>
             <h4>Studios</h4>
+            <div style="display: flex;">
             {% for studio in movie.studio.all %}
-            <small><a href="{% url 'studio' name=studio.name %}">{{studio.name}}</a></small>
+            <form Method="POST" action="{% url 'studio' slug=studio.slug %}">
+            {% csrf_token %}
+                <input type="hidden" value="{{studio.name}}" name="studio_name">
+                <small><button id="studio" action="submit">{{studio.name}}</button></small>
+            </form>
             {% endfor %}
             </div>
+            </div>
             <div class="animation">
-            <h4>Actors</h4>
+            <h4>Actors</h4>    
                 <div class="actor">
-                    {% for actor in movie.actors.all %}
-                    <a href="{% url 'actor' actor_first_name=actor.first_name actor_last_name=actor.last_name %}"><div class="actor-card">
+                {% for actor in movie.actors.all %}
+                <form Method="POST" action="{% url 'actor' slug=actor.slug %}">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{actor.first_name}}" name="actor_first_name">
+                    <input type="hidden" value="{{actor.last_name}}" name="actor_last_name">
+                    <button style="all:unset; cursor: pointer;" action="submit">
+                        <div class="actor-card">
                         <img src="{{actor.profile_picture.url}}">
-                        <p>{{actor.first_name}} {{actor.last_name}} {{actor.actor_slug}}</p>
-                                                
-                    </div>
-                    </a>
+                        <p>{{actor.first_name}} {{actor.last_name}}</p>                      
+                        </div>
+                    </button>
+                </form>
                     {% endfor %}
                 </div>
             </div>
             <div class="animation">
             <div class="btn">
-                    <a href="{% url 'playing' title=movie.title pk=movie.id %}"><img style="width: 20px; height: 20px; transform: translateY(3px);" src="{% static 'img/play.png' %}">Play</a>
+                    <a href="{% url 'playing' title=movie.slug pk=movie.id %}"><img style="width: 20px; height: 20px; transform: translateY(3px);" src="{% static 'img/play.png' %}">Play</a>
                     <a id="trailer" href="javascript:void(0)"> Trailer </a>    
             </div>
             </div>    
