@@ -23,7 +23,7 @@ class ActorSitemap(Sitemap):
         return Actor.objects.all()
     
     def location(self, obj):
-        return f"/actor/{obj.first_name}-{obj.last_name}" # Explicitly define the URL path
+        return f"/actor/{obj.slug}" # Explicitly define the URL path
 
 class GenreSitemap(Sitemap):
     changefreq = "daily"
@@ -34,7 +34,7 @@ class GenreSitemap(Sitemap):
         return Genre.objects.all()
     
     def location(self, obj):
-        return f"/genre/{obj.genre_choice}" # Explicitly define the URL path
+        return f"/genre/{obj.slug}" # Explicitly define the URL path
     
 class StudioSitemap(Sitemap):
     changefreq = "daily"
@@ -45,4 +45,4 @@ class StudioSitemap(Sitemap):
         return Studio.objects.all()
     
     def location(self, obj):
-        return f"/studio/{obj.name}" # Explicitly define the URL path
+        return f"/studio/{obj.slug}" # Explicitly define the URL path

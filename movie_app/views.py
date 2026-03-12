@@ -9,6 +9,8 @@ import requests
 from django.views.decorators.csrf import ensure_csrf_cookie
 import random
 from django.utils.text import slugify
+from django.db.models import Value
+from django.db.models.functions import Concat
 
 def index(request):
     return redirect('home')
@@ -48,7 +50,7 @@ def get_rating(pk):
         rating = None
 
     return rating
-
+    print
 def get_popular_movie():
     api_key = '7f3c4c10ff7da5d1a65cdbae1c27fad9'
     url = f'https://api.themoviedb.org/3/movie/popular?api_key={api_key}'
@@ -172,8 +174,6 @@ def get_movie_trailer(tmdb_id):
     backdrop_data = requests.get(url_image).json()
     if backdrop_data['backdrops']:
         backdrop_len = (len(backdrop_data['backdrops']))-1
-        print(backdrop_len)
-        print(random.randint(1, backdrop_len))
         backdrops = {
             'backdrop1' : backdrop_data['backdrops'][random.randint(1, backdrop_len)]['file_path'],
             'backdrop2' : backdrop_data['backdrops'][random.randint(1, backdrop_len)]['file_path'],
@@ -232,7 +232,6 @@ def home(request):
     return render(request, 'home.html',context)
 
 def movie_detail(request,pk,title):
-    print(title)
     movies = Movie.objects.filter(id=pk).prefetch_related('genres')  
     watchlist_movie = Movie.objects.get(id=pk)
     types, year_list, genres, countries = browse()
@@ -284,14 +283,13 @@ def playing(request, pk, title):
 
 def genre(request, slug):
     movie_genre1 = request.POST.get('genre')
-    lowercase_movie_genre1 = str(movie_genre1).lower()
-    print(lowercase_movie_genre1)
     types, year_list, genres, countries = browse()
     tmdb_id = request.session.get('temporary_data1')
     title = request.session.get('temporary_data2')
     
     try:
-        a = Genre.objects.get(genre_choice=lowercase_movie_genre1)
+        data = str(slug).replace('-',' ')
+        a = Genre.objects.get(genre_choice__icontains=data)
         movies= Movie.objects.filter(genres=a)
         user_profile = get_profile(request)
     except:
@@ -303,17 +301,16 @@ def genre(request, slug):
         'year_list':year_list,
         'genres':genres,
         'countries':countries,
-        'movie_genre1': movie_genre1,
+        'movie_genre1': data,
         'user_profile' : user_profile,
     }
 
     return render(request, 'genre.html', context)
 
 def actor(request,slug):
-    actor_first_name = request.POST.get('actor_first_name')
-    actor_last_name = request.POST.get('actor_last_name')
+    data = str(slug).replace('-',' ')
     types, year_list, genres, countries = browse()
-    a = Actor.objects.get(first_name=actor_first_name, last_name=actor_last_name)
+    a = Actor.objects.annotate(full_name=Concat('first_name', Value(' '), 'last_name')).get(full_name__icontains=data)
     movies = Movie.objects.filter(actors=a)
     user_profile = get_profile(request)
 
@@ -323,8 +320,7 @@ def actor(request,slug):
         'year_list':year_list,
         'genres':genres,
         'countries':countries,
-        'actor_first_name': actor_first_name,
-        'actor_last_name' : actor_last_name,
+        'actor': data,
         'user_profile' : user_profile,
     }
     
@@ -335,8 +331,8 @@ def studio(request, slug):
     tmdb_id = request.session.get('temporary_data1')
     title = request.session.get('temporary_data2')
     try:
-        name = request.POST.get('studio_name')
-        a = Studio.objects.get(name=name)    
+        data = str(slug).replace('-',' ')
+        a = Studio.objects.get(name__icontains=data)    
         movies = Movie.objects.filter(studio=a)
         user_profile = get_profile(request)
     except:
@@ -350,7 +346,7 @@ def studio(request, slug):
         'genres':genres,
         'countries':countries,
         'user_profile' : user_profile,
-        'studio' : name,
+        'studio' : data,
     }
 
     return render(request, 'studio.html', context)
@@ -375,7 +371,6 @@ def movies(request):
 def watchlist(request):
     types, year_list, genres, countries = browse()
     movies = Favorite.objects.filter(user= request.user)      
-    print(movies)
     user_profile = get_profile(request)
 
     context ={

@@ -15,7 +15,7 @@
             <div id="container-8ecc8c56047d70d0e155d74b0457506d"></div>
         </div>
         {% for movie in movies %}
-        <a href="{% url 'movie' title=movie.movie.title pk=movie.movie.id %}"><div class="movie-card">
+        <a href="{% url 'movie' title=movie.movie.slug pk=movie.movie.id %}"><div class="movie-card">
             <div class="poster">
                 <img src="{{movie.movie.poster.url}}">
                 <p class="qulity">{{movie.movie.qulity}}</p>
