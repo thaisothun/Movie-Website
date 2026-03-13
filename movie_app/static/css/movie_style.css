@@ -3,6 +3,7 @@
     position: relative;
     width: 100vw;
     opacity: 1;
+    height: auto;
 }
 
 .wrapper-movie .backdrop-slice{
@@ -195,7 +196,6 @@
     font-size: 0.75em;
     z-index: 2;
     bottom: 15px;
-        
 }
 
 .content-movie a{
@@ -254,7 +254,6 @@
     max-width: 700px;
     height: 50vh;
     anchor-name: --a;
-    
 }
 
 .ifram-trailer a{
@@ -342,7 +341,6 @@
     }
 
     .wrapper-movie{
-        min-height: 85vh;
         height: auto;
     }
 }
