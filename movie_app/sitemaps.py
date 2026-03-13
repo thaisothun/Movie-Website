@@ -10,7 +10,7 @@ class MovieSitemap(Sitemap):
     def items(self):
         # Return a QuerySet of objects to be included in the sitemap
         return Movie.objects.all()
-    
+
     def location(self, obj):
         return f"/movie-detail/{obj.id}/{obj.slug}" # Explicitly define the URL path
     

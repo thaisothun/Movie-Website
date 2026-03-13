@@ -48,6 +48,7 @@ class Actor(models.Model):
     brith_day = models.DateField()
     profile_picture = models.ImageField(upload_to=actor_directory_path)
     slug = models.SlugField(blank=True, null=True, default='click save to auto generate')
+    tmdb_id = models.CharField(default="tmdb")
     
     class Meta:
         ordering = ['first_name', '-last_name']
