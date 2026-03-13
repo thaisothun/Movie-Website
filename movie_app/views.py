@@ -38,6 +38,27 @@ def get_profile(request):
 
     return user_profile
 
+def get_actor_profile(tmdb_id):
+    api_key = '7f3c4c10ff7da5d1a65cdbae1c27fad9' 
+    url = f'https://api.themoviedb.org/3/person/{tmdb_id}?api_key={api_key}'
+    actor = Actor.objects.filter(tmdb_id=tmdb_id)
+    actor_profile_data_tmdb = requests.get(url).json()
+    if actor.exists():    
+        for data in actor:
+            actor_profile = ({
+                'full_name' : f'{data.first_name} {data.last_name}',
+                'gender' : data.gender,
+                'dob' : data.brith_day,
+                'profile' : data.profile_picture,
+                'biography' : actor_profile_data_tmdb['biography'],
+                'place_of_birth' : actor_profile_data_tmdb['place_of_birth'],
+                'popularity' : round(actor_profile_data_tmdb['popularity'])
+            })
+    else:
+        actor_profile = None
+
+    return actor_profile
+
 def get_rating(pk):
     movie = Movie.objects.get(id=pk)
     tmdb_id = movie.tmdb_id
@@ -167,6 +188,7 @@ def get_movie_trailer(tmdb_id):
                 'name' : data['name'],
                 'profile_path' : data['profile_path'],
                 'character' : data['character'],
+                'slug' : slugify( data['name']),
             })
     else:
         actors = None
@@ -194,7 +216,7 @@ def get_movie_trailer(tmdb_id):
             })
     else:
         review_contents = None
-    
+
     return trailer_id, upcoming_review_movie, actors, backdrops, review_contents, director_name    
     
 @ensure_csrf_cookie
@@ -307,24 +329,28 @@ def genre(request, slug):
 
     return render(request, 'genre.html', context)
 
-def actor(request,slug):
+def actor(request,slug,tmdb_id):
     data = str(slug).replace('-',' ')
     types, year_list, genres, countries = browse()
-    a = Actor.objects.annotate(full_name=Concat('first_name', Value(' '), 'last_name')).get(full_name__icontains=data)
-    movies = Movie.objects.filter(actors=a)
-    user_profile = get_profile(request)
-
-    context ={
-        'movies':movies,
-        'types':types,
-        'year_list':year_list,
-        'genres':genres,
-        'countries':countries,
-        'actor': data,
-        'user_profile' : user_profile,
-    }
-    
-    return render(request, 'actor_filter.html', context)
+    tmdb_id = tmdb_id
+    try:
+        a = Actor.objects.annotate(full_name=Concat('first_name', Value(' '), 'last_name')).get(full_name__icontains=data)
+        movies = Movie.objects.filter(actors=a)
+        user_profile = get_profile(request)
+        actor_profile = get_actor_profile(a.tmdb_id)
+        context ={
+            'movies':movies,
+            'types':types,
+            'year_list':year_list,
+            'genres':genres,
+            'countries':countries,
+            'actor': data,
+            'user_profile' : user_profile,
+            'actor_profile' : actor_profile,
+        }
+        return render(request, 'actor_filter.html', context)
+    except:
+        return redirect(f'https://www.themoviedb.org/person/{tmdb_id}')
 
 def studio(request, slug):
     types, year_list, genres, countries = browse()

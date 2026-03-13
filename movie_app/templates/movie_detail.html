@@ -71,7 +71,7 @@
             <h4>Actors</h4>    
                 <div class="actor">
                 {% for actor in movie.actors.all %}
-                <form Method="POST" action="{% url 'actor' slug=actor.slug %}">
+                <form Method="POST" action="{% url 'actor' slug=actor.slug tmdb_id=actor.tmdb_id %} " target="_blank">
                     {% csrf_token %}
                     <input type="hidden" value="{{actor.first_name}}" name="actor_first_name">
                     <input type="hidden" value="{{actor.last_name}}" name="actor_last_name">
