@@ -57,7 +57,7 @@
             <small>{{movie.release_date}}</small>
             </div>
             <h4>Studios</h4>
-            <div style="display: flex;">
+            <div class="studio">
             {% for studio in movie.studio.all %}
             <form Method="POST" action="{% url 'studio' slug=studio.slug %}">
             {% csrf_token %}

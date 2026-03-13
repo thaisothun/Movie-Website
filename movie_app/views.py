@@ -50,27 +50,27 @@ def get_rating(pk):
         rating = None
 
     return rating
-    print
-def get_popular_movie():
+    
+def get_popular_movie(count=None):
     api_key = '7f3c4c10ff7da5d1a65cdbae1c27fad9'
     url = f'https://api.themoviedb.org/3/movie/popular?api_key={api_key}'
     popular_movie_data = requests.get(url).json()
     movie_fliter = []
     for data in popular_movie_data['results']:
         movie_fliter.append(data['id']) 
-    popular_movie = Movie.objects.filter(tmdb_id__in = movie_fliter)
-
+    popular_movie = Movie.objects.filter(tmdb_id__in = movie_fliter)[0:count]
+    
     return popular_movie
 
-def get_trending_movie():
+def get_trending_movie(count=None):
     api_key = '7f3c4c10ff7da5d1a65cdbae1c27fad9'
     url = f'https://api.themoviedb.org/3/trending/movie/week?api_key={api_key}'
     trending_movie_data = requests.get(url).json()
     movie_fliter = []
     for data in trending_movie_data['results']:
-        movie_fliter.append(data['id']) 
+        movie_fliter.append(data['id'])
         
-    trending_movie = Movie.objects.filter(tmdb_id__in = movie_fliter)
+    trending_movie = Movie.objects.filter(tmdb_id__in = movie_fliter)[0:count]
 
     return trending_movie
 
@@ -207,8 +207,8 @@ def home(request):
     movie_type = Movie.objects.filter(type=type_movie).order_by('-id')[:10]
     type_tv_show = MovieType.objects.get(type= 'TV Shows')
     movie_tv_show = Movie.objects.filter(type=type_tv_show).order_by('-id')[:10]
-    popular_movie = get_popular_movie()
-    trending_movie =get_trending_movie()
+    popular_movie = get_popular_movie(10)
+    trending_movie =get_trending_movie(10)
     ratings = []
     for movie in movies:
         rating = get_rating(movie.pk)

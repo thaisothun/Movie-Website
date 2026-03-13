@@ -54,7 +54,7 @@
             <small>{{upcoming_review_movie.release_date}}</small>
             </div>
             <h4>Studios</h4>
-            <div style="display: flex; flex-direction: row;">
+            <div class="studio">
             {% for studio in upcoming_review_movie.production_companies %}
             <form Method="POST" action="{% url 'studio' slug=studio.slug %}">
             {% csrf_token %}
@@ -71,7 +71,7 @@
             <h4>Actors</h4>
                 <div class="actor">
                     {% for actor in actors %}
-                    <a href="https://www.themoviedb.org/person/{{actor.actor_id}}"><div class="actor-card">
+                    <a target="_blank" href="https://www.themoviedb.org/person/{{actor.actor_id}}"><div class="actor-card">
                         <img src="https://image.tmdb.org/t/p/w300_and_h450_face{{actor.profile_path}}">
                         <p>{{actor.name}}</span></p>                        
                     </div>

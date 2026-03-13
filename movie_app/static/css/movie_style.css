@@ -129,6 +129,12 @@
     margin-right: 0.5em;
 }
 
+.wrapper-movie .studio{
+    display: flex;
+    flex-direction: row;
+   
+}
+
 .wrapper-movie #studio{
     all:unset; 
     cursor: pointer; 
@@ -352,4 +358,11 @@
         height: auto;
     }
 
+}
+
+@media screen and (max-width: 1370px) {
+    .wrapper-movie .studio{
+        flex-direction: column;
+        gap: 0.30rem;
+    }
 }
