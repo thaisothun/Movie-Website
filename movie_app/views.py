@@ -335,6 +335,7 @@ def actor(request,slug,tmdb_id):
     tmdb_id = tmdb_id
     try:
         a = Actor.objects.annotate(full_name=Concat('first_name', Value(' '), 'last_name')).get(full_name__icontains=data)
+        actor = get_actor_profile(a.tmdb_id)
         movies = Movie.objects.filter(actors=a)
         user_profile = get_profile(request)
         actor_profile = get_actor_profile(a.tmdb_id)
@@ -344,7 +345,7 @@ def actor(request,slug,tmdb_id):
             'year_list':year_list,
             'genres':genres,
             'countries':countries,
-            'actor': data,
+            'actor': actor,
             'user_profile' : user_profile,
             'actor_profile' : actor_profile,
         }

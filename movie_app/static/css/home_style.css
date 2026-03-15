@@ -510,6 +510,19 @@ footer{
     cursor: pointer;
 }
 
+.actor_profile{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding-left: 10%;
+}
+
+.profile_content{
+    display: grid; 
+    grid-template-columns: 150px 1fr;
+    
+}
+
 @media screen and (max-width: 620px) {
     .container-navbar .logo {
         visibility: hidden;
@@ -569,6 +582,13 @@ footer{
 
     .wrapper-slice{
         height: 93vh;
+    }
+
+    .actor_profile{
+        flex-direction: column;
+    }
+    .actor_profile img{
+        width: 200px;
     }
 }
 
