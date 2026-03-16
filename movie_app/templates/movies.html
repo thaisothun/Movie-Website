@@ -1,56 +1,39 @@
 {% extends 'nav_bar.html' %}
 {% load static %}
-
 {% block title %}
 <title>Movies | Watching Free Movies and TV Shows</title>
 <link rel="canonical" href="https://4allmovie.com/movies" />
 <meta property="og:url" content="https://4allmovie.com/movies" />
 {% endblock %}
-
 {% block content %}
-<div class="popular-movies" style="min-height: 85vh ;">
-    <h1>Movies >></h1>
-    <div class="wrapper-movie-card">
-        <div class="movie-card">
-            <script async="async" data-cfasync="false" src="https://emotionallytonightintelligent.com/8ecc8c56047d70d0e155d74b0457506d/invoke.js"></script>
-            <div id="container-8ecc8c56047d70d0e155d74b0457506d"></div>
-        </div>
-        {% for movie in movies %}
-        <a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
-            <div class="poster">
-                <img src="{{movie.poster.url}}" alt="poster movie title: {{movie.title}}">
-                <p class="qulity">{{movie.qulity}}</p>
-            </div>
-            <div class="card-content">
-                <p>{{movie.title}}</p>
-                <hr>
-                {% for genre in movie.genres.all %}
-                <small>{{genre.genre_choice|title}}</small>
-                {% endfor %}
-            </div>
-        </div></a>
-        
-        {% endfor %}
-    </div>
+<div class="popular-movies" style="min-height:85vh">
+<h1>Movies >></h1>
+<div class="wrapper-movie-card">
+<div class="movie-card">
+<script async="async" data-cfasync="false" src="https://emotionallytonightintelligent.com/8ecc8c56047d70d0e155d74b0457506d/invoke.js"></script>
+<div id="container-8ecc8c56047d70d0e155d74b0457506d"></div>
+</div>
+{% for movie in movies %}
+<a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
+<div class="poster">
+<img src="{{movie.poster.url}}" alt="poster movie title: {{movie.title}}">
+<p class="qulity">{{movie.qulity}}</p>
+</div>
+<div class="card-content">
+<p>{{movie.title}}</p>
+<hr>
+{% for genre in movie.genres.all %}
+<small>{{genre.genre_choice|title}}</small>
+{% endfor %}
+</div>
+</div></a>
+{% endfor %}
+</div>
 </div>
 <br>
 <br>
 <br>
-<script>
-    const sections = document.querySelectorAll('.movie-card')
-    const observer = new IntersectionObserver((entries)=>{
-        entries.forEach((entry,i)=>{
-            if(entry.isIntersecting){
-            entry.target.classList.add('show')
-            }
-        }) 
-        
-    },{
-        threshold : 1
-    })
-
-    sections.forEach((section)=>{
-        observer.observe(section)
-    }) 
-</script>
+<script>const sections=document.querySelectorAll('.movie-card')
+const observer=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){entry.target.classList.add('show')}})},{threshold:1})
+sections.forEach((section)=>{observer.observe(section)})</script>
 {% endblock %}

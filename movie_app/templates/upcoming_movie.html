@@ -1,57 +1,38 @@
 {% extends 'nav_bar.html' %}
 {% load static %}
-
 {% block title %}
 <title>Upcoming Movie | Watching Free Movies and TV Shows</title>
 <link rel="canonical" href="https://4allmovie.com/upcoming-movies" />
 <meta property="og:url" content="https://4allmovie.com/upcoming-movies" />
-
 {% endblock %}
-
 {% block content %}
 </div>
-<div class="popular-movies" style="min-height: 85vh;">
-    <h1>Upcoming Movies Review >></h1>
-    <div class="wrapper-movie-card">
-        <div id="view-all"><a href="{% url 'upcoming_movie' %} ">View All </a></div>
-        <div class="movie-card">
-            <script async="async" data-cfasync="false" src="https://emotionallytonightintelligent.com/8ecc8c56047d70d0e155d74b0457506d/invoke.js"></script>
-            <div id="container-8ecc8c56047d70d0e155d74b0457506d"></div>
-        </div>
-        {% for movie in upcoming_movie %}
-        <a href="{% url 'upcoming_review' tmdb_id=movie.id title=movie.slug %}"><div class="movie-card">
-            <div class="poster">
-                <img src="https://image.tmdb.org/t/p/original{{movie.poster}}" alt="poster movie title: {{movie.title}}">
-                
-            </div>
-            <div class="card-content">
-                <p>{{movie.title}}</p>
-                <hr>
-                <small>Release : {{movie.release_date}}</small>
-                
-            </div>
-        </div></a>
-        {% endfor %}      
-    </div>
-</div>   
+<div class="popular-movies" style="min-height:85vh">
+<h1>Upcoming Movies Review >></h1>
+<div class="wrapper-movie-card">
+<div id="view-all"><a href="{% url 'upcoming_movie' %} ">View All </a></div>
+<div class="movie-card">
+<script async="async" data-cfasync="false" src="https://emotionallytonightintelligent.com/8ecc8c56047d70d0e155d74b0457506d/invoke.js"></script>
+<div id="container-8ecc8c56047d70d0e155d74b0457506d"></div>
+</div>
+{% for movie in upcoming_movie %}
+<a href="{% url 'upcoming_review' tmdb_id=movie.id title=movie.slug %}"><div class="movie-card">
+<div class="poster">
+<img src="https://image.tmdb.org/t/p/original{{movie.poster}}" fetchpriority="high" alt="poster movie title: {{movie.title}}">
+</div>
+<div class="card-content">
+<p>{{movie.title}}</p>
+<hr>
+<small>Release : {{movie.release_date}}</small>
+</div>
+</div></a>
+{% endfor %}
+</div>
+</div>
 <br>
 <br>
 <br>
-<script>
-    const sections = document.querySelectorAll('.movie-card')
-    const observer = new IntersectionObserver((entries)=>{
-        entries.forEach((entry,i)=>{
-            if(entry.isIntersecting){
-            entry.target.classList.add('show')
-            }
-        }) 
-        
-    },{
-        threshold : 1
-    })
-
-    sections.forEach((section)=>{
-        observer.observe(section)
-    }) 
-</script>
+<script>const sections=document.querySelectorAll('.movie-card')
+const observer=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){entry.target.classList.add('show')}})},{threshold:1})
+sections.forEach((section)=>{observer.observe(section)})</script>
 {% endblock %}

@@ -1,168 +1,124 @@
 {% extends 'nav_bar.html' %}
 {% load static %}
-
 {% block title %}
 <link rel="stylesheet" href="{% static 'css/movie_style.css' %}">
 <title>Movies Details | Watching Free Movies and TV Shows</title>
 <link rel="canonical" href="https://4allmovie.com/movie-detail" />
 <meta property="og:url" content="https://4allmovie.com/movie-detail" />
 {% endblock %}
-
 {% block content %}
 <div class="movie">
-    {% for movie in movies %}
-    <div class="wrapper-movie">   
-        <div class="backdrop-slice active2">
-            <img id="backdrop1" src="{{movie.backdrop1.url}}" alt="backdrop1 movie title: {{movie.title}}">
-        </div>
-        <div class="backdrop-slice">
-            <img id="backdrop2" src="{{movie.backdrop2.url}}" alt="backdrop2 movie title: {{movie.title}}">
-        </div>
-        <div class="content-movie">
-            <div class="animation">
-            <h1>{{movie.title}}</h1>
-            <small>{{movie.pg}} running times {{movie.running_time}} mm TMDB-Rating <span style="font-size: 1.5rem;"> {{rating}} &#9733; </span> </small><small style="font-size: 1.5rem; font-weight: 800; color: white; ">{{movie.qulity}}</small>
-            </div>
-            <div id="like-watchlist" class="watchlist">
-                {% if user_like %}
-                <a href="{% url 'like-movie' title=movie.title pk=movie.id %}"><img src="{% static 'img/like_active.png' %}" alt="like icon"></a><small>  </small>
-                {% else %}
-                <a href="{% url 'like-movie' title=movie.title pk=movie.id %}"><img src="{% static 'img/like.png' %}" alt="like icon"></a><small>  </small>
-                {% endif %}
-                {% if watchlist %}
-                <a href="{% url 'add-watchlist' title=movie.title pk=movie.id %}"><img src="{% static 'img/bookmark_active.png' %}" alt="watchlist icon"></a>
-                {% else %}
-                <a href="{% url 'add-watchlist' title=movie.title pk=movie.id %}"><img src="{% static 'img/bookmark.png' %}" alt="watchlist icon"></a>
-                {% endif %}
-            </div>
-            <div id="description" class="animation">
-            <p>{{movie.description}}</p>
-            </div>
-            <div class="animation">
-            <h4>Genres</h4>
-            <div style="display: flex; flex-direction: row;">
-            {% for genre in movie.genres.all %}
-            <form Method="POST" action="{% url 'genre' slug=genre.slug %}">
-                {% csrf_token %}
-                <input type="hidden" value="{{genre.genre_choice}}" name="genre">
-                <small><button action="submit" id="studio" href="">{{genre.genre_choice |title }}</button></small>
-            </form>
-            {% endfor %}
-            </div>
-            </div>
-            <div class="animation">
-            <div id="tv-layout">
-            <h4>Directors</h4>
-            <small>{{movie.director}}</small>
-            <h4>Release Date</h4>
-            <small>{{movie.release_date}}</small>
-            </div>
-            <h4>Studios</h4>
-            <div class="studio">
-            {% for studio in movie.studio.all %}
-            <form Method="POST" action="{% url 'studio' slug=studio.slug %}">
-            {% csrf_token %}
-                <input type="hidden" value="{{studio.name}}" name="studio_name">
-                <small><button id="studio" action="submit">{{studio.name}}</button></small>
-            </form>
-            {% endfor %}
-            </div>
-            </div>
-            <div class="animation">
-            <h4>Actors</h4>    
-                <div class="actor">
-                {% for actor in movie.actors.all %}
-                <form Method="POST" action="{% url 'actor' slug=actor.slug tmdb_id=actor.tmdb_id %} " target="_blank">
-                    {% csrf_token %}
-                    <input type="hidden" value="{{actor.first_name}}" name="actor_first_name">
-                    <input type="hidden" value="{{actor.last_name}}" name="actor_last_name">
-                    <button style="all:unset; cursor: pointer;" action="submit">
-                        <div class="actor-card">
-                        <img src="{{actor.profile_picture.url}}" alt="profile photo actor: {{actor.first_name}} {{actor.last_name}}">
-                        <p>{{actor.first_name}} {{actor.last_name}}</p>                      
-                        </div>
-                    </button>
-                </form>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="animation">
-            <div class="btn">
-                    <a href="{% url 'playing' title=movie.slug pk=movie.id %}"><img style="width: 20px; height: 20px; transform: translateY(3px);" src="{% static 'img/play.png' %}" alt="play icon">Play</a>
-                    <a id="trailer" href="javascript:void(0)"> Trailer </a>    
-            </div>
-            </div>    
-        </div>
-        
-    </div>
-    <div class="ifram-trailer">
-    <iframe id="iframe" src="{{movie.trailer_url}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <a id="exit" href="javascript:void(0)">Exit</a>
-</div>   
-    {% endfor %}
+{% for movie in movies %}
+<div class="wrapper-movie">
+<div class="backdrop-slice active2">
+<img id="backdrop1" src="{{movie.backdrop1.url}}" fetchpriority="high" alt="backdrop1 movie title: {{movie.title}}">
 </div>
-
-
-    <script>
-        var iframs_btn = document.getElementById('trailer')
-        var iframs = document.querySelectorAll('.ifram-trailer')
-        var iframs_src = document.getElementById('iframe')
-        
-        iframs_btn.addEventListener('click', function(){
-            iframs[0].classList.add('show')
-        })
-
-        var iframs_btn_exit = document.getElementById('exit')
-        iframs_btn_exit.addEventListener('click', ()=>{
-            iframs[0].classList.remove('show')
-            iframs_src.src = iframs_src.src;
-        })
-
-
-        var slices = document.querySelectorAll('.backdrop-slice');
-        var active = document.getElementsByClassName('active2');
-        current_slice = 1;
-        function autoSlice(){
-            [...active].forEach((acticSlice)=>{
-                acticSlice.classList.remove('active2')
-            })
-            slices[current_slice].classList.add('active2')
-            current_slice++;
-            if (slices.length == current_slice){
-                current_slice=0
-            }
-            if (current_slice>slices.length){
-                return
-            }    
-        }    
-        setInterval(autoSlice,5000)      
-
-        var user_status = '{{user_status}}'
-        if (user_status ==  'False'){
-            var link_watchlist = document.getElementById('like-watchlist')
-            var links = link_watchlist.querySelectorAll('a')
-            links.forEach((link)=>{
-                link.style.pointerEvents = 'none'
-                })
-            link_watchlist.addEventListener('mouseenter',()=>{
-                var watchlist_info = document.getElementsByClassName('watchlist')
-                watchlist_info[0].classList.add('active')
-            })
-            link_watchlist.addEventListener('mouseleave',()=>{
-                var watchlist_info = document.getElementsByClassName('watchlist')
-                watchlist_info[0].classList.remove('active')
-            })
-
-        if (user_status == 'True'){
-            var link_watchlist = document.getElementById('like-watchlist')
-            var links = link_watchlist.querySelectorAll('a')
-            links.forEach((link)=>{
-                link.style.pointerEvents = 'auto'
-            })
-        }  
-        
-        }
-    </script>
+<div class="backdrop-slice">
+<img id="backdrop2" src="{{movie.backdrop2.url}}" fetchpriority="high" alt="backdrop2 movie title: {{movie.title}}">
+</div>
+<div class="content-movie">
+<div class="animation">
+<h1>{{movie.title}}</h1>
+<small>{{movie.pg}} running times {{movie.running_time}} mm TMDB-Rating <span style="font-size:1.5rem"> {{rating}} &#9733; </span> </small><small style="font-size:1.5rem;font-weight:800;color:white">{{movie.qulity}}</small>
+</div>
+<div id="like-watchlist" class="watchlist">
+{% if user_like %}
+<a href="{% url 'like-movie' title=movie.title pk=movie.id %}"><img src="{% static 'img/like_active.png' %}" alt="like icon"></a><small> </small>
+{% else %}
+<a href="{% url 'like-movie' title=movie.title pk=movie.id %}"><img src="{% static 'img/like.png' %}" alt="like icon"></a><small> </small>
+{% endif %}
+{% if watchlist %}
+<a href="{% url 'add-watchlist' title=movie.title pk=movie.id %}"><img src="{% static 'img/bookmark_active.png' %}" alt="watchlist icon"></a>
+{% else %}
+<a href="{% url 'add-watchlist' title=movie.title pk=movie.id %}"><img src="{% static 'img/bookmark.png' %}" alt="watchlist icon"></a>
+{% endif %}
+</div>
+<div id="description" class="animation">
+<p>{{movie.description}}</p>
+</div>
+<div class="animation">
+<h4>Genres</h4>
+<div style="display:flex;flex-direction:row">
+{% for genre in movie.genres.all %}
+<form Method="POST" action="{% url 'genre' slug=genre.slug %}">
+{% csrf_token %}
+<input type="hidden" value="{{genre.genre_choice}}" name="genre">
+<small><button action="submit" id="studio" href="">{{genre.genre_choice |title }}</button></small>
+</form>
+{% endfor %}
+</div>
+</div>
+<div class="animation">
+<div id="tv-layout">
+<h4>Directors</h4>
+<small>{{movie.director}}</small>
+<h4>Release Date</h4>
+<small>{{movie.release_date}}</small>
+</div>
+<h4>Studios</h4>
+<div class="studio">
+{% for studio in movie.studio.all %}
+<form Method="POST" action="{% url 'studio' slug=studio.slug %}">
+{% csrf_token %}
+<input type="hidden" value="{{studio.name}}" name="studio_name">
+<small><button id="studio" action="submit">{{studio.name}}</button></small>
+</form>
+{% endfor %}
+</div>
+</div>
+<div class="animation">
+<h4>Actors</h4>
+<div class="actor">
+{% for actor in movie.actors.all %}
+<form Method="POST" action="{% url 'actor' slug=actor.slug tmdb_id=actor.tmdb_id %} " target="_blank">
+{% csrf_token %}
+<input type="hidden" value="{{actor.first_name}}" name="actor_first_name">
+<input type="hidden" value="{{actor.last_name}}" name="actor_last_name">
+<button style="all:unset;cursor:pointer" action="submit">
+<div class="actor-card">
+<img src="{{actor.profile_picture.url}}" fetchpriority="high" alt="profile photo actor: {{actor.first_name}} {{actor.last_name}}">
+<p>{{actor.first_name}} {{actor.last_name}}</p>
+</div>
+</button>
+</form>
+{% endfor %}
+</div>
+</div>
+<div class="animation">
+<div class="btn">
+<a href="{% url 'playing' title=movie.slug pk=movie.id %}"><img style="width:20px;height:20px;transform:translateY(3px)" src="{% static 'img/play.png' %}" alt="play icon">Play</a>
+<a id="trailer" href="javascript:void(0)"> Trailer </a>
+</div>
+</div>
+</div>
+</div>
+<div class="ifram-trailer">
+<iframe id="iframe" src="{{movie.trailer_url}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<a id="exit" href="javascript:void(0)">Exit</a>
+</div>
+{% endfor %}
+</div>
+<script>var iframs_btn=document.getElementById('trailer')
+var iframs=document.querySelectorAll('.ifram-trailer')
+var iframs_src=document.getElementById('iframe')
+iframs_btn.addEventListener('click',function(){iframs[0].classList.add('show')})
+var iframs_btn_exit=document.getElementById('exit')
+iframs_btn_exit.addEventListener('click',()=>{iframs[0].classList.remove('show')
+iframs_src.src=iframs_src.src;})
+var slices=document.querySelectorAll('.backdrop-slice');var active=document.getElementsByClassName('active2');current_slice=1;function autoSlice(){[...active].forEach((acticSlice)=>{acticSlice.classList.remove('active2')})
+slices[current_slice].classList.add('active2')
+current_slice++;if(slices.length==current_slice){current_slice=0}
+if(current_slice>slices.length){return}}
+setInterval(autoSlice,5000)
+var user_status='{{user_status}}'
+if(user_status=='False'){var link_watchlist=document.getElementById('like-watchlist')
+var links=link_watchlist.querySelectorAll('a')
+links.forEach((link)=>{link.style.pointerEvents='none'})
+link_watchlist.addEventListener('mouseenter',()=>{var watchlist_info=document.getElementsByClassName('watchlist')
+watchlist_info[0].classList.add('active')})
+link_watchlist.addEventListener('mouseleave',()=>{var watchlist_info=document.getElementsByClassName('watchlist')
+watchlist_info[0].classList.remove('active')})
+if(user_status=='True'){var link_watchlist=document.getElementById('like-watchlist')
+var links=link_watchlist.querySelectorAll('a')
+links.forEach((link)=>{link.style.pointerEvents='auto'})}}</script>
 {% endblock %}
-
-    

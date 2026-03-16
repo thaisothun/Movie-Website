@@ -8,6 +8,7 @@
     margin: 0;
     padding: 0;
     font-family: "Open Sans", sans-serif;
+    font-display: swap;
     font-optical-sizing: auto;
     box-sizing: border-box;
     --base-color: #191716 !important;
@@ -258,6 +259,10 @@ input[type="checkbox"] {
     font-size: calc(1.3rem + 2vw);
 }
 
+.container-slice .content h2{
+    font-size: calc(1.3rem + 2vw);
+}
+
 .container-slice small{
     color: var(--accent-color);
     margin-right: 0.5rem;
@@ -352,6 +357,11 @@ input[type="checkbox"] {
 }
 
 .popular-movies h1{
+    padding: clamp(15px, 5vw, 50px) 4em;
+    font-size: calc(1.25rem + 0.5vw);
+}
+
+.popular-movies h2{
     padding: clamp(15px, 5vw, 50px) 4em;
     font-size: calc(1.25rem + 0.5vw);
 }

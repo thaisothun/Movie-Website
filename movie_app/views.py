@@ -225,7 +225,7 @@ def home(request):
     movies = Movie.objects.all().prefetch_related('genres').order_by('-views')[:5]
     user_profile = get_profile(request)
     type_movie = MovieType.objects.get(type= 'Movies')
-    upcoming_movie = get_now_playing_movie(9)
+    upcoming_movie = get_now_playing_movie(4)
     movie_type = Movie.objects.filter(type=type_movie).order_by('-id')[:10]
     type_tv_show = MovieType.objects.get(type= 'TV Shows')
     movie_tv_show = Movie.objects.filter(type=type_tv_show).order_by('-id')[:10]

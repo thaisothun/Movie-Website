@@ -1,259 +1,160 @@
 {% extends 'nav_bar.html' %}
 {% load static %}
-
 {% block title %}
 <title>Home | Watching Free Movies and TV Shows</title>
 <link rel="canonical" href="https://4allmovie.com" />
 <meta property="og:url" content="https://4allmovie.com" />
 {% endblock %}
-
 {% block content %}
-<div style="background-color: aliceblue;">
+<div style="background-color:aliceblue">
 <div class="container-slice">
-    <div class="nav-btn">
-        <div class="btn-slice"></div>
-        <div class="btn-slice"></div>
-        <div class="btn-slice"></div>
-        <div class="btn-slice"></div>
-        <div class="btn-slice"></div>
-    </div>
-    {% for movie, rating in packed %}
-        
-    <div class="wrapper-slice">   
-        <img id="backdrop-slice" src="{{movie.backdrop1.url}}" alt="backdrop movie title: {{movie.title}}">
-        <div style="background-color: black;">
-
-        </div>
-        <div class="content">
-            <h1>{{movie.title}}</h1>
-            <small>{{movie.pg}} - running times {{movie.running_time}} mm TMDB-Rating <span style="font-size: 1.5rem;"> {{rating}} &#9733; </span> </small><small style="font-size: 1.5rem; font-weight: 800; color: white; ">{{movie.qulity}}</small>
-            <p>{{movie.description}}</p>
-            <h4>Genres</h4>
-            {% for genre in movie.genres.all %}
-            <small>{{genre.genre_choice|title }}</small>
-            {% endfor %}
-            <div class="poster">
-                <a class="pause-auto" href="{% url 'movie' title=movie.slug pk=movie.id %}" > <img src="{{movie.poster.url}}" alt="movie poster title: {{movie.title}}"> </a>
-            </div>
-            
-        </div>
-    </div>   
-    {% endfor %}
+<div class="nav-btn">
+<div class="btn-slice"></div>
+<div class="btn-slice"></div>
+<div class="btn-slice"></div>
+<div class="btn-slice"></div>
+<div class="btn-slice"></div>
+</div>
+{% for movie, rating in packed %}
+<div class="wrapper-slice">
+<img id="backdrop-slice" fetchpriority="high" src="{{movie.backdrop1.url}}" alt="backdrop movie title: {{movie.title}}">
+<div style="background-color:black">
+</div>
+<div class="content">
+<h2>{{movie.title}}</h2>
+<small>{{movie.pg}} - running times {{movie.running_time}} mm TMDB-Rating <span style="font-size:1.5rem"> {{rating}} &#9733; </span> </small><small style="font-size:1.5rem;font-weight:800;color:white">{{movie.qulity}}</small>
+<p>{{movie.description}}</p>
+<h4>Genres</h4>
+{% for genre in movie.genres.all %}
+<small>{{genre.genre_choice|title }}</small>
+{% endfor %}
+<div class="poster">
+<a class="pause-auto" href="{% url 'movie' title=movie.slug pk=movie.id %}"> <img src="{{movie.poster.url}}" fetchpriority="high" alt="movie poster title: {{movie.title}}"> </a>
 </div>
 </div>
-<div style="margin-top: 2rem; justify-content: center; align-items: center; display: flex; ">
-    <script>
-  atOptions = {
-    'key' : '67cef8b77971b9b66978985fbb403c7c',
-    'format' : 'iframe',
-    'height' : 90,
-    'width' : 728,
-    'params' : {}
-  };
-</script>
+</div>
+{% endfor %}
+</div>
+</div>
+<div style="margin-top:2rem;justify-content:center;align-items:center;display:flex">
+<script>atOptions={'key':'67cef8b77971b9b66978985fbb403c7c','format':'iframe','height':90,'width':728,'params':{}};</script>
 <script src="https://emotionallytonightintelligent.com/67cef8b77971b9b66978985fbb403c7c/invoke.js"></script>
 </div>
 <div class="popular-movies">
-    <h1>Upcoming Movies Review >></h1>
-    <div class="wrapper-movie-card">
-        <div id="view-all"><a href="{% url 'upcoming_movie' %} ">View All </a></div>
-        {% for movie in upcoming_movie %}
-        <a href="{% url 'upcoming_review' tmdb_id=movie.id title=movie.slug %}"><div class="movie-card">
-            <div class="poster">
-                <img src="https://image.tmdb.org/t/p/original{{movie.poster}}" alt="poster movie title:{{movie.title}}">
-                
-            </div>
-            <div class="card-content">
-                <p>{{movie.title}}</p>
-                <hr>
-                <small>Release : {{movie.release_date}}</small>
-                
-            </div>
-        </div></a>
-        {% endfor %}
-         <div class="movie-card">
-            <script async="async" data-cfasync="false" src="https://emotionallytonightintelligent.com/8ecc8c56047d70d0e155d74b0457506d/invoke.js"></script>
-            <div id="container-8ecc8c56047d70d0e155d74b0457506d"></div>
-        </div>        
-    </div>
-</div>   
-<div class="popular-movies">
-    <h1>Popular Movies >></h1>
-    <div class="wrapper-movie-card">
-        <div id="view-all"><a href="{% url 'popular' %} ">View All </a></div>
-        {% for movie in popular_movie %}
-        <a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
-            <div class="poster">
-                <img src="{{movie.poster.url}}" alt="poster movie title:{{movie.title}}">
-                <p class="qulity">{{movie.qulity}}</p>
-            </div>
-            <div class="card-content">
-                <p>{{movie.title}}</p>
-                <hr>
-                {% for genre in movie.genres.all %}
-                <small>{{genre.genre_choice|title }}</small>
-                {% endfor %}
-            </div>
-        </div></a>
-        {% endfor %}
-                
-    </div>
-</div>    
-<div class="popular-movies">
-    <h1>Trending Movies >></h1>
-    <div class="wrapper-movie-card">
-        <div id="view-all"><a href="{% url 'trending' %}">View All</a></div>
-        {% for movie in trending_movie %}
-        <a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
-            <div class="poster">
-                <img src="{{movie.poster.url}}" alt="poster movie title: {{movie.title}}">
-                <p class="qulity">{{movie.qulity}}</p>
-            </div>
-            <div class="card-content">
-                <p>{{movie.title}}</p>
-                <hr>
-                {% for genre in movie.genres.all %}
-                <small>{{genre.genre_choice|title }}</small>
-                {% endfor %}
-            </div>
-        </div></a>
-        {% endfor %}
-        
-    </div>
+<h1>Upcoming Movies Review >></h1>
+<div class="wrapper-movie-card">
+<div id="view-all"><a href="{% url 'upcoming_movie' %} ">View All </a></div>
+{% for movie in upcoming_movie %}
+<a href="{% url 'upcoming_review' tmdb_id=movie.id title=movie.slug %}"><div class="movie-card">
+<div class="poster">
+<img src="https://image.tmdb.org/t/p/original{{movie.poster}}" loading="lazy" alt="poster movie title:{{movie.title}}">
+</div>
+<div class="card-content">
+<p>{{movie.title}}</p>
+<hr>
+<small>Release : {{movie.release_date}}</small>
+</div>
+</div></a>
+{% endfor %}
+<div class="movie-card">
+<script async="async" data-cfasync="false" src="https://emotionallytonightintelligent.com/8ecc8c56047d70d0e155d74b0457506d/invoke.js"></script>
+<div id="container-8ecc8c56047d70d0e155d74b0457506d"></div>
+</div>
+</div>
 </div>
 <div class="popular-movies">
-    <h1>Movies >></h1>
-    <div class="wrapper-movie-card">
-        <div id="view-all"><a href="{% url 'movies' %}">View All</a></div>
-        {% for movie in movie_type %}
-        <a href="{% url 'movie' title=movie.slug pk=movie.id %}"> <div class="movie-card">
-            <div class="poster">
-                <img src="{{movie.poster.url}}" alt="poster movie title: {{movie.title}}">
-                <p class="qulity">{{movie.qulity}}</p>
-            </div>
-            <div class="card-content">
-                <p>{{movie.title}}</p>
-                <hr>
-                {% for genre in movie.genres.all %}
-                <small>{{genre.genre_choice|title }}</small>
-                {% endfor %}
-            </div>
-        </div></a>
-        {% endfor %}
-        
-    </div>
+<h1>Popular Movies >></h1>
+<div class="wrapper-movie-card">
+<div id="view-all"><a href="{% url 'popular' %} ">View All </a></div>
+{% for movie in popular_movie %}
+<a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
+<div class="poster">
+<img src="{{movie.poster.url}}" loading="lazy" alt="poster movie title:{{movie.title}}">
+<p class="qulity">{{movie.qulity}}</p>
+</div>
+<div class="card-content">
+<p>{{movie.title}}</p>
+<hr>
+{% for genre in movie.genres.all %}
+<small>{{genre.genre_choice|title }}</small>
+{% endfor %}
+</div>
+</div></a>
+{% endfor %}
+</div>
 </div>
 <div class="popular-movies">
-    <h1>TV Shows >></h1>
-    <div class="wrapper-movie-card">
-        <div id="view-all"><a href="{% url 'tv_shows' %}">View All</a></div>
-        {% for movie in movie_tv_show %}
-        <a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
-            <div class="poster">
-                <img src="{{movie.poster.url}}" alt="poster movie title: {{movie.title}}">
-                <p class="qulity">{{movie.qulity}}</p>
-            </div>
-            <div class="card-content">
-                <p>{{movie.title}}</p>
-                <hr>
-                {% for genre in movie.genres.all %}
-                <small>{{genre.genre_choice|title }}</small>
-                {% endfor %}
-            </div>
-        </div></a>
-        {% endfor %}
-        
-    </div>
+<h1>Trending Movies >></h1>
+<div class="wrapper-movie-card">
+<div id="view-all"><a href="{% url 'trending' %}">View All</a></div>
+{% for movie in trending_movie %}
+<a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
+<div class="poster">
+<img src="{{movie.poster.url}}" loading="lazy" alt="poster movie title: {{movie.title}}">
+<p class="qulity">{{movie.qulity}}</p>
+</div>
+<div class="card-content">
+<p>{{movie.title}}</p>
+<hr>
+{% for genre in movie.genres.all %}
+<small>{{genre.genre_choice|title }}</small>
+{% endfor %}
+</div>
+</div></a>
+{% endfor %}
+</div>
+</div>
+<div class="popular-movies">
+<h1>Movies >></h1>
+<div class="wrapper-movie-card">
+<div id="view-all"><a href="{% url 'movies' %}">View All</a></div>
+{% for movie in movie_type %}
+<a href="{% url 'movie' title=movie.slug pk=movie.id %}"> <div class="movie-card">
+<div class="poster">
+<img src="{{movie.poster.url}}" loading="lazy" alt="poster movie title: {{movie.title}}">
+<p class="qulity">{{movie.qulity}}</p>
+</div>
+<div class="card-content">
+<p>{{movie.title}}</p>
+<hr>
+{% for genre in movie.genres.all %}
+<small>{{genre.genre_choice|title }}</small>
+{% endfor %}
+</div>
+</div></a>
+{% endfor %}
+</div>
+</div>
+<div class="popular-movies">
+<h1>TV Shows >></h1>
+<div class="wrapper-movie-card">
+<div id="view-all"><a href="{% url 'tv_shows' %}">View All</a></div>
+{% for movie in movie_tv_show %}
+<a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
+<div class="poster">
+<img src="{{movie.poster.url}}" loading="lazy" alt="poster movie title: {{movie.title}}">
+<p class="qulity">{{movie.qulity}}</p>
+</div>
+<div class="card-content">
+<p>{{movie.title}}</p>
+<hr>
+{% for genre in movie.genres.all %}
+<small>{{genre.genre_choice|title }}</small>
+{% endfor %}
+</div>
+</div></a>
+{% endfor %}
+</div>
 <br>
 <br>
 <br>
 </div>
-<script>
-    var slices = document.querySelectorAll('.wrapper-slice');
-    var btns = document.querySelectorAll('.btn-slice');
-    var contents = document.querySelectorAll('.content');
-    var hoverBoxs = document.querySelectorAll('.pause-auto');
-    let currentSlice =1;
-    let pause = false;
-    
-    hoverBoxs.forEach((hoverBox,i)=>{
-        hoverBox.addEventListener('mouseenter', ()=>{
-        pause = true;
-        });
-        
-        hoverBox.addEventListener('mouseleave', ()=>{
-        pause = false;
-    });
-        
-    })   
-    
-    slices[0].classList.add('active');
-    btns[0].classList.add('active');
-    contents[0].classList.add('active');
-
-    var manualNav = function(manual){
-        slices.forEach((slice)=>{
-            slice.classList.remove('active');
-            btns.forEach((btn)=>{
-                btn.classList.remove('active');
-
-            });
-            contents.forEach((content)=>{
-                content.classList.remove('active');
-            })
-        });
-
-        slices[manual].classList.add('active');
-        btns[manual].classList.add('active');
-        contents[manual].classList.add('active');
-    }
-
-    btns.forEach((btn,i)=>{
-        btn.addEventListener('click', ()=>{
-        manualNav(i);
-        currentSlice = i;
-        });
-    });
-
-    var active = document.getElementsByClassName('active');
-    
-    function autoSlice(){
-        if(!pause){
-            [...active].forEach ((activeSlice)=>{
-                activeSlice.classList.remove('active');
-            })
-            slices[currentSlice].classList.add('active');
-            btns[currentSlice].classList.add('active');
-            contents[currentSlice].classList.add('active');
-            currentSlice++;
-            if(slices.length==currentSlice){
-                currentSlice=0;
-            }
-            if(currentSlice>=slices.length){
-                return;
-            }
-        }
-    }
-    
-    setInterval(autoSlice,5000);
-    
-    const sections = document.querySelectorAll('.movie-card')
-    const observer = new IntersectionObserver((entries)=>{
-        entries.forEach((entry,i)=>{
-            if(entry.isIntersecting){
-            entry.target.classList.add('show')
-            }
-        }) 
-        
-    },{
-        threshold : 1
-    })
-
-    sections.forEach((section)=>{
-        observer.observe(section)
-    }) 
-
-</script>
+<script>var slices=document.querySelectorAll('.wrapper-slice');var btns=document.querySelectorAll('.btn-slice');var contents=document.querySelectorAll('.content');var hoverBoxs=document.querySelectorAll('.pause-auto');let currentSlice=1;let pause=false;hoverBoxs.forEach((hoverBox,i)=>{hoverBox.addEventListener('mouseenter',()=>{pause=true;});hoverBox.addEventListener('mouseleave',()=>{pause=false;});})
+slices[0].classList.add('active');btns[0].classList.add('active');contents[0].classList.add('active');var manualNav=function(manual){slices.forEach((slice)=>{slice.classList.remove('active');btns.forEach((btn)=>{btn.classList.remove('active');});contents.forEach((content)=>{content.classList.remove('active');})});slices[manual].classList.add('active');btns[manual].classList.add('active');contents[manual].classList.add('active');}
+btns.forEach((btn,i)=>{btn.addEventListener('click',()=>{manualNav(i);currentSlice=i;});});var active=document.getElementsByClassName('active');function autoSlice(){if(!pause){[...active].forEach((activeSlice)=>{activeSlice.classList.remove('active');})
+slices[currentSlice].classList.add('active');btns[currentSlice].classList.add('active');contents[currentSlice].classList.add('active');currentSlice++;if(slices.length==currentSlice){currentSlice=0;}
+if(currentSlice>=slices.length){return;}}}
+setInterval(autoSlice,5000);const sections=document.querySelectorAll('.movie-card')
+const observer=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){entry.target.classList.add('show')}})},{threshold:1})
+sections.forEach((section)=>{observer.observe(section)})</script>
 {% endblock %}
-
-    
