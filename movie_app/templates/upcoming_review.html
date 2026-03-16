@@ -13,22 +13,22 @@
     <div class="wrapper-movie">   
         {% if backdrops %}
         <div class="backdrop-slice active2">
-            <img id="backdrop1" src="https://image.tmdb.org/t/p/original{{backdrops.backdrop1}}">
+            <img id="backdrop1" src="https://image.tmdb.org/t/p/original{{backdrops.backdrop1}}" alt="backdrop1 movie title: {{upcoming_review_movie.title}}">
         </div>
         <div class="backdrop-slice">
-            <img id="backdrop2" src="https://image.tmdb.org/t/p/original{{backdrops.backdrop2}}">
+            <img id="backdrop2" src="https://image.tmdb.org/t/p/original{{backdrops.backdrop2}}" alt="backdrop2 movie title: {{upcoming_review_movie.title}}">
         </div>
         <div class="backdrop-slice">
-            <img id="backdrop2" src="https://image.tmdb.org/t/p/original{{backdrops.backdrop3}}">
+            <img id="backdrop2" src="https://image.tmdb.org/t/p/original{{backdrops.backdrop3}}" alt="backdrop3 movie title: {{upcoming_review_movie.title}}">
         </div>
         {% else %}
         <div class="backdrop-slice1">
-            <img id="backdrop1" src="{% static 'img/movie_review_bg.jpg' %}">
+            <img id="backdrop1" src="{% static 'img/movie_review_bg.jpg' %}" alt="backdrop movie title: {{upcoming_review_movie.title}}">
         </div>
         {% endif %}
         <div class="content-movie">
             <div class="animation">
-            <h2>{{upcoming_review_movie.title}}</h2>
+            <h1>{{upcoming_review_movie.title}}</h1>
             <small>Running times {{upcoming_review_movie.runtime}} mm TMDB-Rating <span style="font-size: 1.5rem;"> {{upcoming_review_movie.vote_average}} &#9733; </span> </small><small style="font-size: 1.5rem; font-weight: 800; color: white; "></small>
             </div>
             <div id="description" class="animation">
@@ -75,7 +75,7 @@
                     {% csrf_token %}
                     <button style="all:unset; cursor: pointer;" action="submit">
                         <div class="actor-card">
-                        <img src="https://image.tmdb.org/t/p/w300_and_h450_face{{actor.profile_path}}">
+                        <img src="https://image.tmdb.org/t/p/w300_and_h450_face{{actor.profile_path}}" alt="profile photo actor: {{actor.name}}">
                         <p>{{actor.name}}</span></p>                      
                         </div>
                     </button>
@@ -87,7 +87,7 @@
             </div>
             <div class="animation">
             <div class="btn">
-                    <a id="review" href="javascript:void(0)"><img style="width: 20px; height: 20px; transform: translateY(3px);" src="{% static 'img/play.png' %}">Review</a>
+                    <a id="review" href="javascript:void(0)"><img style="width: 20px; height: 20px; transform: translateY(3px);" src="{% static 'img/play.png' %}" alt="play icon">Review</a>
                     <a id="trailer" href="javascript:void(0)"> Trailer </a>    
             </div>
             </div>    
@@ -103,9 +103,9 @@
             {% if review_contents%}
             {% for content in review_contents %}
             {% if content.avatar_path %}
-            <img src="https://secure.gravatar.com/avatar{{content.avatar_path}}">
+            <img src="https://secure.gravatar.com/avatar{{content.avatar_path}}" alt="profile photo review">
             {% else %}
-            <img src="{% static 'img/no_profile.png' %}">
+            <img src="{% static 'img/no_profile.png' %}" alt="profile photo review">
             {% endif %}
             <h3>{{content.username}}</h3>
             <small>{{content.date}}</small>

@@ -9,7 +9,7 @@
 {% block content %}
 <div class="popular-movies" style="min-height: 85vh ;">
     {% if movies %}
-    <h2>Your Filter >></h2>
+    <h1>Your Filter >></h1>
     <div class="wrapper-movie-card">
         <div class="movie-card">
             <script async="async" data-cfasync="false" src="https://emotionallytonightintelligent.com/8ecc8c56047d70d0e155d74b0457506d/invoke.js"></script>
@@ -18,7 +18,7 @@
         {% for movie in movies %}
         <a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
             <div class="poster">
-                <img src="{{movie.poster.url}}">
+                <img src="{{movie.poster.url}}" alt="poster movie title: {{movie.title}}">
                 <p class="qulity">{{movie.qulity}}</p>
             </div>
             <div class="card-content">

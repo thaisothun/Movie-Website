@@ -9,7 +9,7 @@
 {% block content %}
 </div>
 <div class="popular-movies" style="min-height: 85vh;">
-    <h2>Upcoming Movies Review >></h2>
+    <h1>Upcoming Movies Review >></h1>
     <div class="wrapper-movie-card">
         <div id="view-all"><a href="{% url 'upcoming_movie' %} ">View All </a></div>
         <div class="movie-card">
@@ -19,7 +19,7 @@
         {% for movie in upcoming_movie %}
         <a href="{% url 'upcoming_review' tmdb_id=movie.id title=movie.slug %}"><div class="movie-card">
             <div class="poster">
-                <img src="https://image.tmdb.org/t/p/original{{movie.poster}}">
+                <img src="https://image.tmdb.org/t/p/original{{movie.poster}}" alt="poster movie title: {{movie.title}}">
                 
             </div>
             <div class="card-content">

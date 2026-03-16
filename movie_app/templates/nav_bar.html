@@ -46,9 +46,9 @@
                 
                 <div id="contain-profile">    
                 {% if user_profile.image_profile %}
-                <a href="{% url 'profile' %}"><img id="profile" src="{{user_profile.image_profile.url}}"></a>
+                <a href="{% url 'profile' %}"><img id="profile" src="{{user_profile.image_profile.url}}" alt="user profile photo"></a>
                 {% else %}
-                <a href="{% url 'profile' %}"><img id="profile" src="{% static 'img/no_profile.png' %}"></a>
+                <a href="{% url 'profile' %}"><img id="profile" src="{% static 'img/no_profile.png' %}"all="user no profile photo"></a>
                 {% endif %}
                 </div>
             
@@ -112,9 +112,9 @@
             <div class="sidebar-top">
                 <div style="display: flex; gap:0.5rem">
                 <input style="padding-left: 10px;" name="search" type="text" placeholder="Search Movies or TV Shows" required value="{{ request.GET.search }}"> 
-                <button id="search" type="submit"><img src="{% static 'img/search.png' %}"></button></form>
+                <button id="search" type="submit"><img src="{% static 'img/search.png' %}" alt="seach icon"></button></form>
                 </div>
-            <img id="menu" src="{% static 'img/menu.png' %}">
+            <img id="menu" src="{% static 'img/menu.png' %}" alt="menu icon">
             </div>
         
         <div class="sidebar">

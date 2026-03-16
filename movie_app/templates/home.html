@@ -19,12 +19,12 @@
     {% for movie, rating in packed %}
         
     <div class="wrapper-slice">   
-        <img id="backdrop-slice" src="{{movie.backdrop1.url}}">
+        <img id="backdrop-slice" src="{{movie.backdrop1.url}}" alt="backdrop movie title: {{movie.title}}">
         <div style="background-color: black;">
 
         </div>
         <div class="content">
-            <h2>{{movie.title}}</h2>
+            <h1>{{movie.title}}</h1>
             <small>{{movie.pg}} - running times {{movie.running_time}} mm TMDB-Rating <span style="font-size: 1.5rem;"> {{rating}} &#9733; </span> </small><small style="font-size: 1.5rem; font-weight: 800; color: white; ">{{movie.qulity}}</small>
             <p>{{movie.description}}</p>
             <h4>Genres</h4>
@@ -32,7 +32,7 @@
             <small>{{genre.genre_choice|title }}</small>
             {% endfor %}
             <div class="poster">
-                <a class="pause-auto" href="{% url 'movie' title=movie.slug pk=movie.id %}" > <img src="{{movie.poster.url}}"> </a>
+                <a class="pause-auto" href="{% url 'movie' title=movie.slug pk=movie.id %}" > <img src="{{movie.poster.url}}" alt="movie poster title: {{movie.title}}"> </a>
             </div>
             
         </div>
@@ -53,13 +53,13 @@
 <script src="https://emotionallytonightintelligent.com/67cef8b77971b9b66978985fbb403c7c/invoke.js"></script>
 </div>
 <div class="popular-movies">
-    <h2>Upcoming Movies Review >></h2>
+    <h1>Upcoming Movies Review >></h1>
     <div class="wrapper-movie-card">
         <div id="view-all"><a href="{% url 'upcoming_movie' %} ">View All </a></div>
         {% for movie in upcoming_movie %}
         <a href="{% url 'upcoming_review' tmdb_id=movie.id title=movie.slug %}"><div class="movie-card">
             <div class="poster">
-                <img src="https://image.tmdb.org/t/p/original{{movie.poster}}">
+                <img src="https://image.tmdb.org/t/p/original{{movie.poster}}" alt="poster movie title:{{movie.title}}">
                 
             </div>
             <div class="card-content">
@@ -77,13 +77,13 @@
     </div>
 </div>   
 <div class="popular-movies">
-    <h2>Popular Movies >></h2>
+    <h1>Popular Movies >></h1>
     <div class="wrapper-movie-card">
         <div id="view-all"><a href="{% url 'popular' %} ">View All </a></div>
         {% for movie in popular_movie %}
         <a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
             <div class="poster">
-                <img src="{{movie.poster.url}}">
+                <img src="{{movie.poster.url}}" alt="poster movie title:{{movie.title}}">
                 <p class="qulity">{{movie.qulity}}</p>
             </div>
             <div class="card-content">
@@ -99,13 +99,13 @@
     </div>
 </div>    
 <div class="popular-movies">
-    <h2>Trending Movies >></h2>
+    <h1>Trending Movies >></h1>
     <div class="wrapper-movie-card">
         <div id="view-all"><a href="{% url 'trending' %}">View All</a></div>
         {% for movie in trending_movie %}
         <a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
             <div class="poster">
-                <img src="{{movie.poster.url}}">
+                <img src="{{movie.poster.url}}" alt="poster movie title: {{movie.title}}">
                 <p class="qulity">{{movie.qulity}}</p>
             </div>
             <div class="card-content">
@@ -121,13 +121,13 @@
     </div>
 </div>
 <div class="popular-movies">
-    <h2>Movies >></h2>
+    <h1>Movies >></h1>
     <div class="wrapper-movie-card">
         <div id="view-all"><a href="{% url 'movies' %}">View All</a></div>
         {% for movie in movie_type %}
         <a href="{% url 'movie' title=movie.slug pk=movie.id %}"> <div class="movie-card">
             <div class="poster">
-                <img src="{{movie.poster.url}}">
+                <img src="{{movie.poster.url}}" alt="poster movie title: {{movie.title}}">
                 <p class="qulity">{{movie.qulity}}</p>
             </div>
             <div class="card-content">
@@ -143,13 +143,13 @@
     </div>
 </div>
 <div class="popular-movies">
-    <h2>TV Shows >></h2>
+    <h1>TV Shows >></h1>
     <div class="wrapper-movie-card">
         <div id="view-all"><a href="{% url 'tv_shows' %}">View All</a></div>
         {% for movie in movie_tv_show %}
         <a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
             <div class="poster">
-                <img src="{{movie.poster.url}}">
+                <img src="{{movie.poster.url}}" alt="poster movie title: {{movie.title}}">
                 <p class="qulity">{{movie.qulity}}</p>
             </div>
             <div class="card-content">

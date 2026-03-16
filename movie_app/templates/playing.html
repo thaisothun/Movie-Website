@@ -11,7 +11,7 @@
 
 {% block content %}
 <div class="playing"> 
-    <h2 style="position: relative;"> Now Playing {{movie.title}}</h3>
+    <h1 style="position: relative;"> Now Playing {{movie.title}}</h1>
    
     <div class="player"><iframe src="{{movie.bunny_embed_code}}" loading="lazy" style="border:0;position:absolute;top:0;height:300px;width:100%;display: block;" allow="autoplay;accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;" allowfullscreen="true"></iframe>
     </div>

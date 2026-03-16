@@ -2,6 +2,7 @@ from django.urls import path
 from .import views
 from django.contrib.sitemaps.views import sitemap, index
 from movie_app.sitemaps import MovieSitemap, ActorSitemap, GenreSitemap, StudioSitemap
+from django.views.generic.base import TemplateView
 
 sitemaps = {
     'movies': MovieSitemap,
@@ -34,5 +35,7 @@ urlpatterns = [
     path("upcoming-movies-review/<str:tmdb_id>/<str:title>/", views.upcoming_review, name='upcoming_review'),
     path("upcoming-movies/", views.upcoming_movie, name='upcoming_movie'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+    ),
     
 ]

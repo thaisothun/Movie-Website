@@ -8,10 +8,10 @@
 
 {% block content %}
 <div class="popular-movies" style="min-height: 85vh ;">
-    <h2>{{actor.full_name|title}} >></h2>
+    <h1>{{actor.full_name|title}} >></h1>
     <div class="actor_profile">
         <div class="photo">
-        <img src="{{actor.profile.url}}">
+        <img src="{{actor.profile.url}}" alt="profile photo actor: {{actor.full_name}}">
         </div>
         <div>
         <div class="profile_content">
@@ -41,7 +41,7 @@
         {% for movie in movies %}
         <a href="{% url 'movie' title=movie.slug pk=movie.id %}"><div class="movie-card">
             <div class="poster">
-                <img src="{{movie.poster.url}}">
+                <img src="{{movie.poster.url}}" alt="poster movie title: {{movie.title}}">
                 <p class="qulity">{{movie.qulity}}</p>
             </div>
             <div class="card-content">

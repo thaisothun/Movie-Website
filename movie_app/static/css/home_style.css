@@ -254,7 +254,7 @@ input[type="checkbox"] {
     opacity: 0;
 }
 
-.container-slice .content h2{
+.container-slice .content h1{
     font-size: calc(1.3rem + 2vw);
 }
 
@@ -351,7 +351,7 @@ input[type="checkbox"] {
     background-color: var(--base-color);
 }
 
-.popular-movies h2{
+.popular-movies h1{
     padding: clamp(15px, 5vw, 50px) 4em;
     font-size: calc(1.25rem + 0.5vw);
 }
