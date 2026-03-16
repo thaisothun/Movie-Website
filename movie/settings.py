@@ -143,7 +143,7 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_S3_CUSTOM_DOMAIN = "4allmoviemedia.b-cdn.net/practical-folder-s87t8mgd"
 
 STATIC_URL = '4allmovie.b-cdn.net/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIR = [
     os.path.join(BASE_DIR, 'static')
 ]
