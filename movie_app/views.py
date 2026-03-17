@@ -332,8 +332,9 @@ def genre(request, slug):
         'countries':countries,
         'movie_genre1': data,
         'user_profile' : user_profile,
+        'slug' : slug
     }
-
+    print(slug)
     return render(request, 'genre.html', context)
 
 def actor(request,slug,tmdb_id):
