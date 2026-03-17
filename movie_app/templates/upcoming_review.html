@@ -3,10 +3,10 @@
 {% block title %}
 <link rel="stylesheet" href="{% static 'css/movie_style.css' %}">
 <title>Upcoming Movies Review | Watching Free Movies and TV Shows</title>
-<link rel="canonical" href="https://4allmovie.com/upcoming-movies-review"/>
+<link rel="canonical" href="https://4allmovie.com/upcoming-movies-review/" />
 <meta property="og:url" content="https://4allmovie.com/upcoming-movies-review/{{upcoming_review_movie.id}}/{{upcoming_review_movie.slug}}/" />
 <meta property="og:title" content="{{upcoming_review_movie.title}}">
-<meta property="og:description" content="{{upcoming_review_movie.overview|truncatewords:50}}">
+<meta property="og:description" content="{{upcoming_review_movie.overview|truncatewords:20}}">
 <meta property="og:image" content="https://image.tmdb.org/t/p/original{{upcoming_review_movie.poster_path}}">
 {% endblock %}
 {% block content %}

@@ -3,11 +3,11 @@
 {% block title %}
 <link rel="stylesheet" href="{% static 'css/movie_style.css' %}">
 <title>Movies Details | Watching Free Movies and TV Shows</title>
-<link rel="canonical" href="https://4allmovie.com/movie-detail" />
+<link rel="canonical" href="https://4allmovie.com/movie-detail/" />
 {% for movie in movies %}
 <meta property="og:url" content="https://4allmovie.com/movie-detail/{{movie.id}}/{{movie.slug}}/" />
 <meta property="og:title" content="{{movie.title}}">
-<meta property="og:description" content="{{movie.description|truncatewords:50}}">
+<meta property="og:description" content="{{movie.description|truncatewords:20}}">
 <meta property="og:image" content="{{movie.poster.url}}">
 {% endfor %}
 {% endblock %}

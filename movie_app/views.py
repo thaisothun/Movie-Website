@@ -384,6 +384,7 @@ def studio(request, slug):
         'countries':countries,
         'user_profile' : user_profile,
         'studio' : data,
+        'slug' : slug
     }
 
     return render(request, 'studio.html', context)
