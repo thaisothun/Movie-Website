@@ -4,7 +4,9 @@
 <link rel="stylesheet" href="{% static 'css/movie_style.css' %}">
 <title>Movies Details | Watching Free Movies and TV Shows</title>
 <link rel="canonical" href="https://4allmovie.com/movie-detail" />
-<meta property="og:url" content="https://4allmovie.com/movie-detail" />
+{% for movie in movies %}
+<meta property="og:url" content="https://4allmovie.com/movie-detail/{{movie.slug}}" />
+{% endfor %}
 {% endblock %}
 {% block content %}
 <div class="movie">
