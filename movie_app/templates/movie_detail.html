@@ -6,6 +6,7 @@
 <link rel="canonical" href="https://4allmovie.com/movie-detail" />
 {% for movie in movies %}
 <meta property="og:url" content="https://4allmovie.com/movie-detail/{{movie.slug}}" />
+<meta property=og:image content="{{movie.poster.url}}"/>
 {% endfor %}
 {% endblock %}
 {% block content %}
