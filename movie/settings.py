@@ -166,7 +166,3 @@ STORAGES = {
         },
     },
 }
-
-USE_I18N = True # Usually enabled by default
-USE_L10N = True # Usually enabled by default
-USE_THOUSAND_SEPARATOR = True
