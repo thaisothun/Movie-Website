@@ -176,7 +176,6 @@ def get_movie_trailer(tmdb_id):
    
     else:
         upcoming_review_movie = None
-    print(upcoming_review_movie)
 
     trailer_movie_data = requests.get(url_trailer).json()
     if trailer_movie_data['results']:
@@ -334,7 +333,7 @@ def genre(request, slug):
         'user_profile' : user_profile,
         'slug' : slug
     }
-    print(slug)
+    
     return render(request, 'genre.html', context)
 
 def actor(request,slug,tmdb_id):
@@ -360,6 +359,7 @@ def actor(request,slug,tmdb_id):
             'tmdb_id' : tmdb_id,
         }
         return render(request, 'actor_filter.html', context)
+    
     except:
         return redirect(f'https://www.themoviedb.org/person/{tmdb_id}')
 
