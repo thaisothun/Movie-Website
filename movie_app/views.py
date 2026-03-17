@@ -52,7 +52,8 @@ def get_actor_profile(tmdb_id):
                 'profile' : data.profile_picture,
                 'biography' : actor_profile_data_tmdb['biography'],
                 'place_of_birth' : actor_profile_data_tmdb['place_of_birth'],
-                'popularity' : round(actor_profile_data_tmdb['popularity'])
+                'popularity' : round(actor_profile_data_tmdb['popularity']),
+                
             })
     else:
         actor_profile = None
@@ -348,6 +349,8 @@ def actor(request,slug,tmdb_id):
             'actor': actor,
             'user_profile' : user_profile,
             'actor_profile' : actor_profile,
+            'actor_slug' : slug,
+            'tmdb_id' : tmdb_id,
         }
         return render(request, 'actor_filter.html', context)
     except:

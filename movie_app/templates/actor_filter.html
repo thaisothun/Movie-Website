@@ -1,7 +1,7 @@
 {% extends 'nav_bar.html' %} {% load static %} {% block title %}
 <title>Actor | Watching Free Movies and TV Shows</title>
-<link rel=canonical href=https://4allmovie.com/actor>
-<meta property=og:url content="https://4allmovie.com/actor/{{actor.tmdb_id}}/{{actor.slug}}/" />
+<link rel=canonical href="https://4allmovie.com/actor" />
+<meta property=og:url content="https://4allmovie.com/actor/{{tmdb_id}}/{{actor_slug}}/" />
 <meta property="og:title" content="{{actor.full_name|title}}">
 <meta property="og:description" content="{{actor.biography|truncatewords:200}}">
 <meta property="og:image" content="{{actor.profile.url}}">
