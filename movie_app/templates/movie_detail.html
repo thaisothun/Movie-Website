@@ -7,7 +7,7 @@
 {% for movie in movies %}
 <meta property="og:url" content="https://4allmovie.com/movie-detail/{{movie.id}}/{{movie.slug}}/" />
 <meta property="og:title" content="{{movie.title}}">
-<meta property="og:description" content="{{movie.description}}">
+<meta property="og:description" content="{{movie.description|truncatewords:50}}">
 <meta property="og:image" content="{{movie.poster.url}}">
 {% endfor %}
 {% endblock %}

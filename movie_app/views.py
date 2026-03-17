@@ -104,7 +104,7 @@ def get_now_playing_movie(count=None):
     if count is not None:
         i=1
         for data in upcoming_movie_data['results']:
-            slug = str(data['original_title']).replace(' ','-')
+            slug = str(data['original_title'])
             if i <= count:
                 i += 1
                 upcoming_movie.append({
@@ -114,11 +114,12 @@ def get_now_playing_movie(count=None):
                         'rating' : data['vote_average'],
                         'release_date' : data['release_date'],
                         'overview' : data['overview'],
-                        'slug' : slug
+                        'slug' : slugify(slug, allow_unicode=True),
+                        'poster' : data['poster_path'],
                     })
     else:
         for data in upcoming_movie_data['results']:
-            slug = str(data['original_title']).replace(' ','-')
+            slug = str(data['original_title'])
             upcoming_movie.append({
                             'id' : data['id'],
                             'title' : data['original_title'],
@@ -126,7 +127,8 @@ def get_now_playing_movie(count=None):
                             'rating' : data['vote_average'],
                             'release_date' : data['release_date'],
                             'overview' : data['overview'],
-                            'slug' : slug
+                            'slug' : slugify(slug, allow_unicode=True),
+                            'poster' : data['poster_path'],
                         })
     
     return upcoming_movie
@@ -167,10 +169,14 @@ def get_movie_trailer(tmdb_id):
             'poster_path' : review_movie_data['poster_path'],
             'budget' : review_movie_data['budget'],
             'revenue' : review_movie_data['revenue'],
-                
+            'id' : review_movie_data['id'],
+            'slug' : slugify(review_movie_data['original_title'], allow_unicode=True)
+                    
         }
+   
     else:
         upcoming_review_movie = None
+    print(upcoming_review_movie)
 
     trailer_movie_data = requests.get(url_trailer).json()
     if trailer_movie_data['results']:
