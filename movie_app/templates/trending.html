@@ -35,7 +35,7 @@
 <br>
 <br>
 <br>
-<script>const sections=document.querySelectorAll('.movie-card')
+<script defer>const sections=document.querySelectorAll('.movie-card')
 const observer=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){entry.target.classList.add('show')}})},{threshold:1})
 sections.forEach((section)=>{observer.observe(section)})</script>
 {% endblock %}

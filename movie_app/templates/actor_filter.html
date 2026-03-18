@@ -55,5 +55,5 @@
 <br>
 <br>
 <br>
-<script>const sections=document.querySelectorAll(".movie-card"),observer=new IntersectionObserver((e=>{e.forEach(((e,s)=>{e.isIntersecting&&e.target.classList.add("show")}))}),{threshold:1});sections.forEach((e=>{observer.observe(e)}))</script>
+<script defer>const sections=document.querySelectorAll(".movie-card"),observer=new IntersectionObserver((e=>{e.forEach(((e,s)=>{e.isIntersecting&&e.target.classList.add("show")}))}),{threshold:1});sections.forEach((e=>{observer.observe(e)}))</script>
 {% endblock %}

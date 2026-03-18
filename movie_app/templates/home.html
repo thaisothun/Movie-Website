@@ -41,7 +41,7 @@
 </div>
 <div style="margin-top:2rem;justify-content:center;align-items:center;display:flex">
 <script>atOptions={'key':'67cef8b77971b9b66978985fbb403c7c','format':'iframe','height':90,'width':728,'params':{}};</script>
-<script src="https://emotionallytonightintelligent.com/67cef8b77971b9b66978985fbb403c7c/invoke.js"></script>
+<script src="https://emotionallytonightintelligent.com/67cef8b77971b9b66978985fbb403c7c/invoke.js" async></script>
 </div>
 <div class="popular-movies">
 <h1>Upcoming Movies Review >></h1>
@@ -152,7 +152,7 @@
 <br>
 <br>
 </div>
-<script>var slices=document.querySelectorAll('.wrapper-slice');var btns=document.querySelectorAll('.btn-slice');var contents=document.querySelectorAll('.content');var hoverBoxs=document.querySelectorAll('.pause-auto');let currentSlice=1;let pause=false;hoverBoxs.forEach((hoverBox,i)=>{hoverBox.addEventListener('mouseenter',()=>{pause=true;});hoverBox.addEventListener('mouseleave',()=>{pause=false;});})
+<script defer>var slices=document.querySelectorAll('.wrapper-slice');var btns=document.querySelectorAll('.btn-slice');var contents=document.querySelectorAll('.content');var hoverBoxs=document.querySelectorAll('.pause-auto');let currentSlice=1;let pause=false;hoverBoxs.forEach((hoverBox,i)=>{hoverBox.addEventListener('mouseenter',()=>{pause=true;});hoverBox.addEventListener('mouseleave',()=>{pause=false;});})
 slices[0].classList.add('active');btns[0].classList.add('active');contents[0].classList.add('active');var manualNav=function(manual){slices.forEach((slice)=>{slice.classList.remove('active');btns.forEach((btn)=>{btn.classList.remove('active');});contents.forEach((content)=>{content.classList.remove('active');})});slices[manual].classList.add('active');btns[manual].classList.add('active');contents[manual].classList.add('active');}
 btns.forEach((btn,i)=>{btn.addEventListener('click',()=>{manualNav(i);currentSlice=i;});});var active=document.getElementsByClassName('active');function autoSlice(){if(!pause){[...active].forEach((activeSlice)=>{activeSlice.classList.remove('active');})
 slices[currentSlice].classList.add('active');btns[currentSlice].classList.add('active');contents[currentSlice].classList.add('active');currentSlice++;if(slices.length==currentSlice){currentSlice=0;}
