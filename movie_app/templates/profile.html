@@ -14,9 +14,9 @@
 {% csrf_token %}
 <div style="width:150px;height:150px;border-radius:50%">
 {% if user_profile.image_profile %}
-<img src="{{user_profile.image_profile.url}}" style="width:100%;height:100%;object-fit:cover" alt="user profile photo">
+<img src="{{user_profile.image_profile.url}}" fetchpriority="high" style="width:100%;height:100%;object-fit:cover"  alt="user profile photo">
 {% else %}
-<img src="{% static 'img/no_profile.png' %}" style="width:100%;height:100%;object-fit:cover" alt="user profile photo">
+<img src="{% static 'img/no_profile.png' %}" fetchpriority="high" style="width:100%;height:100%;object-fit:cover" alt="user profile photo">
 {% endif %}
 </div>
 {{form2.image_profile}}

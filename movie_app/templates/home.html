@@ -29,7 +29,7 @@
 <p>{{movie.description}}</p>
 <h4>Genres</h4>
 {% for genre in movie.genres.all %}
-<small>{{genre.genre_choice|title }}</small>
+<h5>{{genre.genre_choice|title }}</h5>
 {% endfor %}
 <div class="poster">
 <a class="pause-auto" href="{% url 'movie' title=movie.slug pk=movie.id %}"> <img src="{{movie.poster.url}}" fetchpriority="high" alt="movie poster title: {{movie.title}}"> </a>
