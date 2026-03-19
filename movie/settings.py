@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +26,7 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['moviekt.up.railway.app','localhost', '127.0.0.1','www.4allmovie.com','4allmovie.com']
 CSRF_TRUSTED_ORIGINS = ['https://moviekt.up.railway.app','https://*.4allmovie.com','https://4allmovie.com']
@@ -145,9 +144,6 @@ AWS_S3_CUSTOM_DOMAIN = "4allmoviemedia.b-cdn.net/practical-folder-s87t8mgd"
 
 STATIC_URL = '4allmovie.b-cdn.net/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIR = [
-    os.path.join(BASE_DIR, 'static')
-]
 
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -161,9 +157,5 @@ STORAGES = {
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-        "OPTIONS": {
-            'location': 'static', # Optional, stores static files in a 'static' subfolder
-           
-        },
     },
 }
