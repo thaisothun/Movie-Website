@@ -7,7 +7,9 @@ from django.utils.text import slugify
  
 class Genre(models.Model):
     genre_choice = models.CharField(max_length=50, unique=True, help_text='Please use lowercase')
-    slug = models.SlugField(blank=True, null=True, default='click save to auto generate')
+    slug = models.SlugField(blank=True, null=True, editable=False)
+    updated = models.DateTimeField(auto_now=True)
+    
     class Meta:
         ordering = ['genre_choice']
 
@@ -22,7 +24,8 @@ class Genre(models.Model):
 
 class Studio(models.Model):
     name = models.CharField(max_length=100, unique=True, help_text='The official name of the studio.')
-    slug = models.SlugField(blank=True, null=True, default='click save to auto generate')
+    slug = models.SlugField(blank=True, null=True, editable=False)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['name']
@@ -47,8 +50,9 @@ class Actor(models.Model):
     gender = models.CharField(choices=[('Male','Male'),('Female','Female')])
     brith_day = models.DateField()
     profile_picture = models.ImageField(upload_to=actor_directory_path)
-    slug = models.SlugField(blank=True, null=True, default='click save to auto generate')
+    slug = models.SlugField(blank=True, null=True, editable=False)
     tmdb_id = models.CharField(default="tmdb")
+    updated = models.DateTimeField(auto_now=True)
     
     class Meta:
         ordering = ['first_name', '-last_name']
@@ -122,7 +126,8 @@ class Movie(models.Model):
     trailer_url = models.CharField(blank=True,null=True,default='youtube url')
     views = models.IntegerField(default=0)
     like = models.ManyToManyField(User, related_name='movies', blank=True)
-    slug = models.SlugField(blank=True, null=True, default='click save to auto generate')
+    slug = models.SlugField(blank=True, null=True, editable=False)
+    updated = models.DateTimeField(auto_now=True) 
     
     def __str__(self):
         return self.title
