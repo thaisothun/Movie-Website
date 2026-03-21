@@ -337,11 +337,10 @@ def genre(request, slug):
     return render(request, 'genre.html', context)
 
 def actor(request,slug,tmdb_id):
-    data = str(slug).replace('-',' ')
     types, year_list, genres, countries = browse()
     tmdb_id = tmdb_id
     try:
-        a = Actor.objects.annotate(full_name=Concat('first_name', Value(' '), 'last_name')).get(full_name__icontains=data)
+        a = Actor.objects.get(tmdb_id=tmdb_id)
         actor = get_actor_profile(a.tmdb_id)
         movies = Movie.objects.filter(actors=a)
         user_profile = get_profile(request)
