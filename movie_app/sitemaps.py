@@ -29,7 +29,7 @@ class ActorSitemap(Sitemap):
         return obj.updated
     
     def location(self, obj):
-        return f"/actor/{obj.slug}" # Explicitly define the URL path
+        return f"/actor/{obj.tmdb_id}/{obj.slug}" # Explicitly define the URL path
 
 class GenreSitemap(Sitemap):
     changefreq = "daily"
