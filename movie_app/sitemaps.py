@@ -4,8 +4,7 @@ from .models import Movie, Actor, Genre, Studio
 class MovieSitemap(Sitemap):
     changefreq = "daily"
     priority = 0.8
-    # Optional: set protocol to 'https' for production
-    # protocol = 'https'
+    protocol = 'https'
 
     def items(self):
         # Return a QuerySet of objects to be included in the sitemap
@@ -20,6 +19,7 @@ class MovieSitemap(Sitemap):
 class ActorSitemap(Sitemap):
     changefreq = "daily"
     priority = 0.8
+    protocol = 'https'
 
     def items(self):
         # Return a QuerySet of objects to be included in the sitemap
@@ -34,6 +34,7 @@ class ActorSitemap(Sitemap):
 class GenreSitemap(Sitemap):
     changefreq = "daily"
     priority = 0.8
+    protocol = 'https'
 
     def items(self):
         # Return a QuerySet of objects to be included in the sitemap
@@ -48,6 +49,7 @@ class GenreSitemap(Sitemap):
 class StudioSitemap(Sitemap):
     changefreq = "daily"
     priority = 0.8
+    protocol = 'https'
 
     def items(self):
         # Return a QuerySet of objects to be included in the sitemap
