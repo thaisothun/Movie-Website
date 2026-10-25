@@ -102,7 +102,7 @@ def backdrop_directory_path(instance, filename):
     return f'movies/{instance.title}/backdrop/{new_filename}'
 
 class Movie(models.Model):
-    title = models.CharField(max_length=255, help_text='Do not use < > : " / \ | ? * #, %, &, {, }, $, !, +, or emojis')
+    title = models.CharField(max_length=255, help_text='Do not use < > : " / | ? * #, %, &, {, }, $, !, +, or emojis')
     type = models.ForeignKey(MovieType, on_delete=models.SET_NULL, null=True, related_name='movies', default='Movies')
     description = models.TextField()
     release_date = models.DateField()
